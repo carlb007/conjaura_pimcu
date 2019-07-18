@@ -143,7 +143,7 @@ g_pfnVectors:
   .word  RCC_IRQHandler                    /* RCC                          */
   .word  EXTI0_1_IRQHandler                /* EXTI Line 0 and 1            */
   .word  EXTI2_3_IRQHandler                /* EXTI Line 2 and 3            */
-  .word  SyncSig			               /* EXTI Line 4 to 15            */
+  .word  EXTI4_15_IRQHandler               /* EXTI Line 4 to 15            */
   .word  0                                 /* reserved                     */
   .word  DMA1_Channel1_IRQHandler          /* DMA1 Channel 1               */
   .word  DMA1_Channel2_3_IRQHandler        /* DMA1 Channel 2 and Channel 3 */
@@ -208,8 +208,8 @@ g_pfnVectors:
   .weak      EXTI2_3_IRQHandler
   .thumb_set EXTI2_3_IRQHandler,Default_Handler
 
-  .weak      SyncSig
-  .thumb_set SyncSig,Default_Handler
+  .weak      EXTI4_15_IRQHandler
+  .thumb_set EXTI4_15_IRQHandler,Default_Handler
 
   .weak      DMA1_Channel1_IRQHandler
   .thumb_set DMA1_Channel1_IRQHandler,Default_Handler

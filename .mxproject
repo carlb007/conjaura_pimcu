@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=G:/STM32/Conjaura_Pi_v02_G070k/Inc
+HeaderPath=G:/STM32/conjaura_pimcu/Inc
 HeaderFiles=stm32g0xx_it.h;stm32g0xx_hal_conf.h;main.h;
-SourcePath=G:/STM32/Conjaura_Pi_v02_G070k/Src
+SourcePath=G:/STM32/conjaura_pimcu/Src
 SourceFiles=stm32g0xx_it.c;stm32g0xx_hal_msp.c;main.c;
 
 [PreviousLibFiles]

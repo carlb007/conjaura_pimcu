@@ -6,7 +6,7 @@
  */
 #include "data.h"
 
-extern SPI_HandleTypeDef hspi1;
+extern SPI_HandleTypeDef hspi1,hspi2;
 
 void Initialise(void){
 	debugPrint("Ready\n","");
@@ -21,11 +21,15 @@ void SyncSig(void){
 	global.dataState = AWAITING_HEADER;
 	EnablePiRX();
 	EnableRS485TX();
+	ClearReturnSig();
+}
+
+void ClearReturnSig(void){
 	GPIOB->BRR = STAT2_Pin;	//CLEAR THE HIGH STATE FEEDBACK PIN
-	debugPrint("EXTI Detected. Entered AWAIT HEADER State\n","");
 }
 
 void ReturnSig(void){
+	debugPrint("Fired Return Sig \n",(uint16_t*)"");
 	GPIOB->BSRR = STAT2_Pin;
 }
 
@@ -74,6 +78,7 @@ void ParseHeader(){
 			globalDisplayInfo.totalPanels = *(bufferSPI_RX+2);
 			global.dataSegments = 1;
 			global.dataSegmentSizeLast = ((*(bufferSPI_RX+3)&0x3F)<<8)|*(bufferSPI_RX+4);
+			debugPrint("PANEL CONF SUB MODE Data Size %d\n",(uint8_t*)global.dataSegmentSizeLast);
 			global.dataState = AWAITING_CONF_DATA;
 		}
 		else if(global.configSubMode==COLOUR_MODE){
@@ -96,16 +101,16 @@ void ParseHeader(){
 				global.dataSegments = 1;
 				global.dataSegmentSizeLast = ((*(bufferSPI_RX+3)&0x3F)<<8)|*(bufferSPI_RX+4);
 				debugPrint("COLOUR SUB MODE: PAL COL, Size: %d\n",(uint8_t*)globalDisplayInfo.paletteSize);
+				debugPrint("COLOUR SUB MODE: PAL Length: %d\n",(uint16_t*)global.dataSegmentSizeLast);
 				global.dataState = AWAITING_PALETTE_DATA;
 			}
 			globalDisplayInfo.bamBits = *(bufferSPI_RX+1)&0x3;
-			debugPrint("BAM BITS: %d\n",(uint8_t*)globalDisplayInfo.bamBits);
-			debugPrint("Expecting Data Size: %d\n",(uint8_t*)global.dataSegmentSizeLast);
 		}
 		else if(global.configSubMode==GAMMA_RAMPS){
 			global.dataSegments = 1;
 			global.dataSegmentSizeLast = ((*(bufferSPI_RX+3)&0x3F)<<8)|*(bufferSPI_RX+4);
 			global.dataState = AWAITING_GAMMA_DATA;
+			debugPrint("GAMMA SUB MODE: AWAITING %d DATA BYTES \n",(uint16_t*)global.dataSegmentSizeLast );
 		}
 	}
 	if(global.dataSegments){
@@ -128,12 +133,12 @@ void SendConfHeader(){
 	*bufferSPI_TX =  128;
 	*(bufferSPI_TX+1) = globalDisplayInfo.totalPanels;
 	global.dataState = SENDING_CONF_HEADER;
-	HAL_SPI_Transmit_DMA(&hspi1, bufferSPI_TX, 2);
+	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
 }
 
 void SendConfData(){
 	global.dataState = SENDING_CONF_DATA;
-	HAL_SPI_Transmit_DMA(&hspi1, bufferSPI_RX, globalDisplayInfo.totalPanels*4);
+	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_RX, globalDisplayInfo.totalPanels*4);
 }
 
 
@@ -141,13 +146,14 @@ void SendColourHeader(){
 	*bufferSPI_TX =  (1 << 6) | (globalDisplayInfo.colourMode << 4) | (globalDisplayInfo.biasHC << 2) | globalDisplayInfo.bamBits;
 	*(bufferSPI_TX+1) = globalDisplayInfo.paletteSize;
 	global.dataState = SENDING_PALETTE_HEADER;
-	HAL_SPI_Transmit_DMA(&hspi1, bufferSPI_TX, 2);
+	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
 }
 
 void SendColourData(){
 	uint16_t palSize = (globalDisplayInfo.paletteSize+1)*3;
 	global.dataState = SENDING_PALETTE_DATA;
-	HAL_SPI_Transmit_DMA(&hspi1, bufferSPI_RX, palSize);
+	debugPrint("FORWARDING PALETTE DATA\n",(uint8_t*)"");
+	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_RX, palSize);
 }
 
 void SendGammaHeader(){
@@ -156,7 +162,7 @@ void SendGammaHeader(){
 	*bufferSPI_TX = (1 << 6) | (3 << 4);
 	*(bufferSPI_TX+1) = 0;
 	global.dataState = SENDING_GAMMA_HEADER;
-	HAL_SPI_Transmit_DMA(&hspi1, bufferSPI_TX, 2);
+	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
 }
 
 void SendGammaData(){
@@ -170,7 +176,7 @@ void SendGammaData(){
 		}
 	}
 	global.dataState = SENDING_GAMMA_DATA;
-	HAL_SPI_Transmit_DMA(&hspi1, bufferSPI_RX, gamSize);
+	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_RX, gamSize);
 }
 
 void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi){
@@ -179,14 +185,17 @@ void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi){
 	}
 	else if(global.dataState == AWAITING_CONF_DATA){
 		global.dataSegments = 0;
+		debugPrint("GOT CONF DATA. FORWARDING HEADER AND DATA\n",(uint8_t*)"");
 		SendConfHeader();
 	}
 	else if(global.dataState == AWAITING_PALETTE_DATA){
 		global.dataSegments = 0;
+		debugPrint("GOT PALETTE DATA. FORWARDING HEADER AND DATA\n",(uint8_t*)"");
 		SendColourHeader();
 	}
 	else if(global.dataState == AWAITING_GAMMA_DATA){
 		global.dataSegments = 0;
+		debugPrint("GOT GAMMA DATA. FORWARDING HEADER AND DATA\n",(uint8_t*)"");
 		SendGammaHeader();
 	}
 }
@@ -194,7 +203,7 @@ void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi){
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi){
 	if(global.dataState == AWAITING_PIXEL_DATA){
 		global.currentDataSegment++;
-		debugPrint("GOT DATA SEGMENT %d\n",(uint8_t*)global.currentDataSegment);
+		//debugPrint("GOT DATA SEGMENT %d\n",(uint8_t*)global.currentDataSegment);
 		//SEND SEGMENT OUT TO PANELS
 		HAL_SPI_Transmit_DMA(&hspi1, bufferSPI_RX, global.dataSegmentSize);
 	}
@@ -204,22 +213,28 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi){
 void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
 	if(global.dataState == SENDING_PALETTE_HEADER){
 		if(globalDisplayInfo.paletteSize>0){
+			ClearReturnSig();
 			SendColourData();
 		}
 		else{
+			debugPrint("COLOUR INIT COMPLETE\n",(uint8_t*)"");
 			ReturnSig();
 		}
 	}
 	else if(global.dataState == SENDING_PALETTE_DATA){
+		debugPrint("PALETTE INIT COMPLETE\n",(uint8_t*)"");
 		ReturnSig();
 	}
 	else if(global.dataState == SENDING_GAMMA_HEADER){
+		ClearReturnSig();
 		SendGammaData();
 	}
 	else if(global.dataState == SENDING_GAMMA_DATA){
+		debugPrint("GAMMA INIT COMPLETE\n",(uint8_t*)"");
 		ReturnSig();
 	}
 	else if(global.dataState == SENDING_CONF_HEADER){
+		ClearReturnSig();
 		SendConfData();
 	}
 	else if(global.dataState == SENDING_CONF_DATA){

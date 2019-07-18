@@ -71,8 +71,7 @@ static void MX_USART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint8_t dataRX[6];
-uint8_t dataTX[6] = {1,2,3,4,5,6};
+
 /* USER CODE END 0 */
 
 /**

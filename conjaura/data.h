@@ -17,6 +17,7 @@ void DisablePiRX(void);
 
 void Initialise(void);
 void SyncSig(void);
+void ClearReturnSig(void);
 void ReturnSig(void);
 
 void ParseHeader(void);

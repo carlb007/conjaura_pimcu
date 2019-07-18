@@ -9,8 +9,8 @@
 <!ATTLIST board id CDATA #REQUIRED>
 ]>
 <targetDefinitions>
-  <board id="Conjaura_Pi_v02_G070k">
-    <name>Conjaura_Pi_v02_G070k</name>
+  <board id="conjaura_pimcu">
+    <name>conjaura_pimcu</name>
     <dbgIF>SWD</dbgIF>
     <dbgDEV>ST-Link</dbgDEV>
     <mcuId>stm32g070kbtx</mcuId>

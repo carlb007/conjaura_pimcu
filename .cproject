@@ -19,7 +19,7 @@
 						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug.46626092" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug">
 							<option id="fr.ac6.managedbuild.option.gnu.cross.prefix.1509075492" name="Prefix" superClass="fr.ac6.managedbuild.option.gnu.cross.prefix" useByScannerDiscovery="false" value="arm-none-eabi-" valueType="string"/>
 							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.35618607" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu" useByScannerDiscovery="false" value="STM32G070KBTx" valueType="string"/>
-							<option id="fr.ac6.managedbuild.option.gnu.cross.board.118276672" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board" useByScannerDiscovery="false" value="Conjaura_Pi_v02_G070k" valueType="string"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.board.118276672" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board" useByScannerDiscovery="false" value="conjaura_pimcu" valueType="string"/>
 							<option id="fr.ac6.managedbuild.option.gnu.cross.core.1083960614" name="Core" superClass="fr.ac6.managedbuild.option.gnu.cross.core" useByScannerDiscovery="false" valueType="stringList">
 								<listOptionValue builtIn="false" value="ARM Cortex-M0+"/>
 								<listOptionValue builtIn="false" value="CM0+"/>
@@ -132,7 +132,7 @@
 						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.release.339805032" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.release">
 							<option id="fr.ac6.managedbuild.option.gnu.cross.prefix.1509075492" name="Prefix" superClass="fr.ac6.managedbuild.option.gnu.cross.prefix" value="arm-none-eabi-" valueType="string"/>
 							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.35618607" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu" value="STM32G070KBTx" valueType="string"/>
-							<option id="fr.ac6.managedbuild.option.gnu.cross.board.118276672" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board" value="Conjaura_Pi_v02_G070k" valueType="string"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.board.118276672" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board" value="conjaura_pimcu" valueType="string"/>
 							<option id="fr.ac6.managedbuild.option.gnu.cross.core.1083960614" name="Core" superClass="fr.ac6.managedbuild.option.gnu.cross.core" valueType="stringList">
 								<listOptionValue builtIn="false" value="ARM Cortex-M0+"/>
 								<listOptionValue builtIn="false" value="CM0+"/>
@@ -239,7 +239,7 @@
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration artifactName="${ProjName}" configurationName="Debug">
-			<resource resourceType="PROJECT" workspacePath="Conjaura_Pi_v02_G070k"/>
+			<resource resourceType="PROJECT" workspacePath="conjaura_pimcu"/>
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
