@@ -1,0 +1,118 @@
+/*
+ * globals.h
+ *
+ *  Created on: 15 Jul 2019
+ *      Author: me
+ */
+#include "inttypes.h"
+#include "stdlib.h"
+#include "main.h"
+
+#ifndef GLOBALS_H_
+#define GLOBALS_H_
+
+#define DEBUGMODE 1							//ENABLE PRINTF OUTPUTS
+#define DISABLEWATCHDOG 0					//FORCE REFRESH OF WATCHDOG
+#define TRUE 1
+#define FALSE 0
+
+#define MAX_PANELS 127
+
+#define RX_BUFFER_SIZE 8192					//MAX DATA FEED LENGTH IN A SINGLE BATCH
+#define TX_BUFFER_SIZE 2048					//TRANSMISSION MAX SIZE
+
+#define TOUCH_BUFFER_SIZE 2048				//DATA STORE FOR PANEL DATA SENDS. ASSUMES 16 BYTES PER PANEL OF STORAGE @ 128 PANELS
+#define PERIPHERAL_SIZE 1024				//MAX SIZE FOR COMBINED PANEL PERIPHERALS SUCH AS TEMP SENSORS, MIC SENSORS AND LIGHT SENSORS
+
+typedef enum{								//BUNCH OF DATA STATES. HELD INSIDE "DISPLAY" STRUCT
+	READY,
+	AWAITING_HEADER,
+	AWAITING_PIXEL_DATA,
+	AWAITING_CONF_DATA,
+	AWAITING_PALETTE_DATA,
+	AWAITING_GAMMA_DATA,
+	SENDING_CONF_HEADER,
+	SENDING_PALETTE_HEADER,
+	SENDING_GAMMA_HEADER,
+	SENDING_CONF_DATA,
+	SENDING_PALETTE_DATA,
+	SENDING_GAMMA_DATA,
+	ERR_DATA,
+	ERR_DMA,
+	ERR_TIM
+}DATASTATES;
+
+typedef enum{
+	DATA_MODE,
+	ADDRESS_MODE,
+	CONFIG_MODE
+}HEADERSTATES;
+
+typedef enum{
+	WORKING,
+	RESTART,
+	FINISH
+}ADDRESSMODE_STATES;
+
+typedef enum{
+	PANEL_INF,
+	COLOUR_MODE,
+	GAMMA_RAMPS
+}CONFIGMODE_STATES;
+
+typedef enum{
+	TRUE_COLOUR,
+	HIGH_COLOUR,
+	PALETTE_COLOUR
+}COLOUR_MODES;
+
+
+struct Globals {
+	DATASTATES dataState;					//CURRENT ROUTINE STATE
+	HEADERSTATES dataMode;					//LAST HEADER STATE RECEIVED
+	ADDRESSMODE_STATES addressSubMode;		//SUB HEADER STATE FOR ADDR MODE
+	CONFIGMODE_STATES configSubMode;		//SUB HEADER STATE FOR CONF MODE
+	uint8_t dataSegments;					//TOTAL SEGMENTS EXPECTED FROM RPI DATA STREAM
+	uint8_t currentDataSegment;				//CURRENT SEGMENT PROCESSED FROM RPI DATA STREAM
+	uint16_t dataSegmentSize;				//SIZE IN BYTES OF EACH SEGMENT.
+	uint16_t dataSegmentSizeLast;			//SIZE IN BYTES OF FINAL SEGMENT WHICH MAY BE OF A SMALLER SIZE.
+	uint8_t rs485RXMode;					//CURRENT STATE OF RS485 CHIP
+	uint8_t piRXMode;						//CURRENT STATE OF DIGITAL SWITCH
+	uint16_t currentTouchOffset;			//TRACKING OF OFFSETS
+	uint16_t currentPeripheralOffset;		//TRACKING OF OFFSETS
+} global;
+
+struct DispProperties {
+	uint8_t totalPanels;
+	COLOUR_MODES colourMode;
+	uint8_t paletteSize;					//0 BASE
+	uint8_t bamBits;
+	uint8_t biasHC;							//0 = 5/6/5, 1 = 6/5/5, 2 = 5/5/6, 3 = 5/5/5
+} globalDisplayInfo;
+
+struct PanelInfLookup {
+	uint8_t panelID;
+	uint16_t ledByteSize;					//w*h*colourMode
+	uint16_t edgeByteSize;					//width per8ratio * height per8Ratio
+	uint8_t touchByteSize;					//LENGTH OF DATA RETURNED FOR TOUCH AFTER SEND. CALC BASED ON 1: TOUCH ACTIVE, 2: TOUCH CHANNELS SET, 3 SENSETIVITY
+	uint8_t periperalByteSize;				//LENDTH OF DATA RETURNED FOR PERIPHERALS AFTER SEND. CALC BASED ON 1: PERIP ACTIVE, 2: DATA RETURN SIZE
+} panelInfoLookup[MAX_PANELS];
+
+uint8_t spiBufferRX[RX_BUFFER_SIZE];
+uint8_t * bufferSPI_RX;
+
+uint8_t spiBufferTX[TX_BUFFER_SIZE];
+uint8_t * bufferSPI_TX;
+
+uint8_t panelReturnData[TOUCH_BUFFER_SIZE+PERIPHERAL_SIZE];		//COMBINED RETURN DATA FROM ALL PANELS IN CONNECTED CHAIN. FIRST 2048 RESERVED FOR TOUCH.
+uint8_t * returnData;
+
+
+//struct PanelInfLookup
+
+DATASTATES currentMode;
+
+void debugPrint(char *data, uint8_t *params);
+
+
+#endif /* GLOBALS_H_ */
