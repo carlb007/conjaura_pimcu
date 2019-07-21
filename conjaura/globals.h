@@ -16,21 +16,32 @@
 #define TRUE 1
 #define FALSE 0
 
-#define MAX_PANELS 127
+#define MAX_PANELS 128
+#define MAX_SEGMENTS 64
 
-#define RX_BUFFER_SIZE 8192					//MAX DATA FEED LENGTH IN A SINGLE BATCH
-#define TX_BUFFER_SIZE 2048					//TRANSMISSION MAX SIZE
+/*
+ * At 8192 buffer the most 8x8 panel units that can be fed in 1 go = approximately 128.
+ * 128 8x8 units require a touch buffer of 512Bytes (4 touch points per unit).
+ * 768 Bytes Gives plenty of overhead and allows us to up the 8192 buffer to fill that spare overhead.
+ * This limitation also effects peripheral data. We only have 512 Bytes buffer which directly relates to the per segment data feed.
+ * In a situation where multiple peripherals were all closely located (IE panels 1,2,3,4,5 etc) this buffer could end up over-running depending on the data fed back.
+ */
 
-#define TOUCH_BUFFER_SIZE 2048				//DATA STORE FOR PANEL DATA SENDS. ASSUMES 16 BYTES PER PANEL OF STORAGE @ 128 PANELS
-#define PERIPHERAL_SIZE 1024				//MAX SIZE FOR COMBINED PANEL PERIPHERALS SUCH AS TEMP SENSORS, MIC SENSORS AND LIGHT SENSORS
+#define RX_BUFFER_SIZE 10240				//MAX DATA FEED LENGTH IN A SINGLE BATCH
+#define TX_BUFFER_SIZE 1536					//TRANSMISSION MAX SIZE
+
+#define TOUCH_BUFFER_SIZE 768				//DATA STORE FOR PANEL DATA SENDS. ASSUMES 4 BYTES PER 8x8 PANEL UNIT
+#define PERIPHERAL_SIZE 768					//MAX SIZE FOR COMBINED PANEL PERIPHERALS SUCH AS TEMP SENSORS, MIC SENSORS AND LIGHT SENSORS THAT CAN BE FED IN SINGLE BATCH
 
 typedef enum{								//BUNCH OF DATA STATES. HELD INSIDE "DISPLAY" STRUCT
 	READY,
 	AWAITING_HEADER,
-	AWAITING_PIXEL_DATA,
+	AWAITING_SEGMENT_SIZES,
+	PIXEL_DATA_STREAM,
 	AWAITING_CONF_DATA,
 	AWAITING_PALETTE_DATA,
 	AWAITING_GAMMA_DATA,
+	SENDING_PIXEL_DATA,
 	SENDING_CONF_HEADER,
 	SENDING_PALETTE_HEADER,
 	SENDING_GAMMA_HEADER,
@@ -75,11 +86,12 @@ struct Globals {
 	uint8_t dataSegments;					//TOTAL SEGMENTS EXPECTED FROM RPI DATA STREAM
 	uint8_t currentDataSegment;				//CURRENT SEGMENT PROCESSED FROM RPI DATA STREAM
 	uint16_t dataSegmentSize;				//SIZE IN BYTES OF EACH SEGMENT.
-	uint16_t dataSegmentSizeLast;			//SIZE IN BYTES OF FINAL SEGMENT WHICH MAY BE OF A SMALLER SIZE.
 	uint8_t rs485RXMode;					//CURRENT STATE OF RS485 CHIP
 	uint8_t piRXMode;						//CURRENT STATE OF DIGITAL SWITCH
 	uint16_t currentTouchOffset;			//TRACKING OF OFFSETS
 	uint16_t currentPeripheralOffset;		//TRACKING OF OFFSETS
+	uint16_t packets;
+	uint8_t returnState;
 } global;
 
 struct DispProperties {
@@ -98,6 +110,7 @@ struct PanelInfLookup {
 	uint8_t periperalByteSize;				//LENDTH OF DATA RETURNED FOR PERIPHERALS AFTER SEND. CALC BASED ON 1: PERIP ACTIVE, 2: DATA RETURN SIZE
 } panelInfoLookup[MAX_PANELS];
 
+
 uint8_t spiBufferRX[RX_BUFFER_SIZE];
 uint8_t * bufferSPI_RX;
 
@@ -107,6 +120,8 @@ uint8_t * bufferSPI_TX;
 uint8_t panelReturnData[TOUCH_BUFFER_SIZE+PERIPHERAL_SIZE];		//COMBINED RETURN DATA FROM ALL PANELS IN CONNECTED CHAIN. FIRST 2048 RESERVED FOR TOUCH.
 uint8_t * returnData;
 
+uint16_t segmentSizeLookup[MAX_SEGMENTS];
+uint16_t * segmentSizes;
 
 //struct PanelInfLookup
 

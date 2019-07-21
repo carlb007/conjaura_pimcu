@@ -71,7 +71,7 @@ static void MX_USART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+uint16_t timeLen = 4096;//4096 = Ocassional stuck//1024 = FAIL;
 /* USER CODE END 0 */
 
 /**
@@ -107,7 +107,17 @@ int main(void)
   MX_SPI2_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  Initialise();
+  	__HAL_RCC_TIM6_CLK_ENABLE();
+    TIM6->PSC = 0;
+    TIM6->ARR = timeLen;
+    TIM6->CR1 = 0;
+    TIM6->EGR |= TIM_EGR_UG;
+    TIM6->SR = ~1;
+    TIM6->DIER = 1;
+
+    HAL_NVIC_EnableIRQ(TIM6_IRQn);
+
+    Initialise();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -230,7 +240,7 @@ static void MX_SPI2_Init(void)
   hspi2.Instance = SPI2;
   hspi2.Init.Mode = SPI_MODE_MASTER;
   hspi2.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi2.Init.DataSize = SPI_DATASIZE_4BIT;
+  hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
   hspi2.Init.CLKPolarity = SPI_POLARITY_HIGH;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi2.Init.NSS = SPI_NSS_SOFT;
@@ -353,7 +363,7 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = SEL_READ_WRITE_Pin|STAT2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
@@ -363,7 +373,16 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void TIM6_IRQHandler(){
+	TIM6->CR1 &= ~TIM_CR1_CEN;										//PAUSE TIMER
+	GPIOB->BRR = STAT2_Pin;
+	global.returnState = FALSE;
+	TIM6->ARR = timeLen;
+	TIM6->CNT = 0;													//ZERO TIMER
+	TIM6->SR = 0;													//CLEAR THE UPDATE EVENT FLAG
+	//debugPrint("CallBack\n","");
+	//TIM6->CR1 |= TIM_CR1_CEN;									//RESUME TIMER
+}
 /* USER CODE END 4 */
 
 /**

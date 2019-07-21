@@ -20,7 +20,10 @@ void SyncSig(void);
 void ClearReturnSig(void);
 void ReturnSig(void);
 
+void HeaderMode(void);
 void ParseHeader(void);
+
+void SortSegmentSizes(void);
 
 void AddressMode(void);
 void SendConfHeader(void);
