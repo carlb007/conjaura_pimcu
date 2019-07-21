@@ -86,10 +86,12 @@ struct Globals {
 	uint8_t dataSegments;					//TOTAL SEGMENTS EXPECTED FROM RPI DATA STREAM
 	uint8_t currentDataSegment;				//CURRENT SEGMENT PROCESSED FROM RPI DATA STREAM
 	uint16_t dataSegmentSize;				//SIZE IN BYTES OF EACH SEGMENT.
+	uint16_t lastPanelSent;					//TRACK WHICH PANEL FROM THE CURRENT SEGMENT WE LAST SENT
 	uint8_t rs485RXMode;					//CURRENT STATE OF RS485 CHIP
 	uint8_t piRXMode;						//CURRENT STATE OF DIGITAL SWITCH
-	uint16_t currentTouchOffset;			//TRACKING OF OFFSETS
-	uint16_t currentPeripheralOffset;		//TRACKING OF OFFSETS
+	uint16_t currentSegmentOffset;			//TRACKING OF OFFSETS
+	uint16_t returnDataOffset;				//TRACKING OF OFFSETS
+
 	uint16_t packets;
 	uint8_t returnState;
 } global;
@@ -103,7 +105,6 @@ struct DispProperties {
 } globalDisplayInfo;
 
 struct PanelInfLookup {
-	uint8_t panelID;
 	uint16_t ledByteSize;					//w*h*colourMode
 	uint16_t edgeByteSize;					//width per8ratio * height per8Ratio
 	uint8_t touchByteSize;					//LENGTH OF DATA RETURNED FOR TOUCH AFTER SEND. CALC BASED ON 1: TOUCH ACTIVE, 2: TOUCH CHANNELS SET, 3 SENSETIVITY
