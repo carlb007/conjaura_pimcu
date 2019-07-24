@@ -9,7 +9,7 @@
 extern SPI_HandleTypeDef hspi1,hspi2;
 
 void Initialise(void){
-	debugPrint("Ready\n","");
+	debugPrint("Ready \n",(uint16_t*)"");
 	* returnData = 1;
 	* (returnData+1) = 2;
 	EnablePiRX();
@@ -83,7 +83,7 @@ void ParseHeader(){
 	}
 	else if (global.dataMode == ADDRESS_MODE){
 		global.addressSubMode = (*bufferSPI_RX >>4)&0x3;							//b--XX----
-		debugPrint("ADDRESS MODE\n",(uint8_t*)"");
+		//debugPrint("ADDRESS MODE %d\n",(uint8_t*)global.addressSubMode);
 		global.dataSegments = 0;
 		AddressMode();
 	}
@@ -137,8 +137,10 @@ void ParseHeader(){
 }
 
 void AddressMode(){
-	//TO DO
-
+	*bufferSPI_TX =  64 | (global.addressSubMode<<4);
+	*(bufferSPI_TX+1) = 0;
+	global.dataState = SENDING_ADDRESS_HEADER;
+	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
 }
 
 void SortSegmentSizes(){
@@ -152,14 +154,14 @@ void SortSegmentSizes(){
 }
 
 void SendConfHeader(){
-	*bufferSPI_TX =  128;
+	*bufferSPI_TX =  192;
 	*(bufferSPI_TX+1) = globalDisplayInfo.totalPanels;
 	global.dataState = SENDING_CONF_HEADER;
 	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
 }
 
 void SendColourHeader(){
-	*bufferSPI_TX =  (1 << 6) | (globalDisplayInfo.colourMode << 4) | (globalDisplayInfo.biasHC << 2) | globalDisplayInfo.bamBits;
+	*bufferSPI_TX =  128 | (globalDisplayInfo.colourMode << 4) | (globalDisplayInfo.biasHC << 2) | globalDisplayInfo.bamBits;
 	*(bufferSPI_TX+1) = globalDisplayInfo.paletteSize;
 	global.dataState = SENDING_PALETTE_HEADER;
 	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
@@ -168,7 +170,7 @@ void SendColourHeader(){
 void SendGammaHeader(){
 	//GAMMA DATA UTILISES THE FACT THAT THERES A SPARE BIT IN THE COLOUR MODE - IE ITS FIXED AT 3
 	//WE DONT BOTHER SENDING GAMMA SIZE OVER. ITS DEFINED BY THE COLOUR MODE: 768 FOR TC OR PALETTE, 128 FOR HC
-	*bufferSPI_TX = (1 << 6) | (3 << 4);
+	*bufferSPI_TX = 128 | (3 << 4);
 	*(bufferSPI_TX+1) = 0;
 	global.dataState = SENDING_GAMMA_HEADER;
 	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
@@ -347,6 +349,20 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
 	else if(global.dataState == SENDING_CONF_HEADER){
 		global.dataState = AWAITING_CONF_DATA;
 	}
+	else if(global.dataState == SENDING_ADDRESS_HEADER){
+		if(global.addressSubMode == WORKING || global.addressSubMode == RESTART){
+			global.dataState = COLLECTING_ADDRESS_DATA;
+			EnableRS485RX();
+			/*
+			AT THIS POINT THE PANELS ARE DOING WHATEVER THEY NEED TO DO. WE DONT CARE UNTIL WE GET OUR STAT REQUEST FROM PI
+			AND HEADER TO PUSH THEM BACK INTO STANDARD AWAITING HEADER STATES.
+			WE MUST BE IN RX MODE TO AVOID CONTENDING THE BUS
+			*/
+		}
+		else{
+			ReturnSig();
+		}
+	}
 	if(global.dataState == SENDING_PIXEL_DATA){
 		//DATA PANEL WITHIN SEGMENT SENT. NOW WAIT FOR RETURN RESPONSE IF NEEDED...
 		uint16_t dataLen = panelInfoLookup[global.lastPanelSent].touchByteSize+panelInfoLookup[global.lastPanelSent].periperalByteSize;
@@ -378,7 +394,7 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
 			NextPanelStream();
 		}
 	}
-	if(global.dataState != SENDING_PIXEL_DATA){
+	if(global.dataState != SENDING_PIXEL_DATA && global.dataState != COLLECTING_ADDRESS_DATA){
 		ReturnSig();
 	}
 }

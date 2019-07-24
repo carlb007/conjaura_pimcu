@@ -81,6 +81,7 @@ uint16_t timeLen = 4096;//4096 = Ocassional stuck//1024 = FAIL;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+
   /* USER CODE END 1 */
   
 
@@ -90,7 +91,9 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  initialise_monitor_handles();
+	#if DEBUGMODE
+  	  initialise_monitor_handles();
+	#endif
   /* USER CODE END Init */
 
   /* Configure the system clock */
