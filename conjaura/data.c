@@ -73,7 +73,7 @@ void ParseHeader(){
 		//*(bufferSPI_RX+1)& 0x3F;
 		//global.dataSegments = 1;
 		global.dataSegments = *(bufferSPI_RX+1)&0x3F;				//LSB 6 BITS OF BYTE 2 - 64 MAX SEGMENTS
-		global.dataSegmentSize = global.dataSegments*2;
+		global.dataSegmentSize = global.dataSegments*2;				//SIZE BREAKDOWN DATA NEEDS 2 BYTES PER SEGMENT FOR LENGTH (MAX 32k)
 		//global.dataSegmentSize = <<8)|*(bufferSPI_RX+4);				//LSB 6 BITS OF BYTE 2 + BYTE 3 - MAX 16,383
 		//debugPrint("DATA LEN %d\n",(uint8_t*)global.dataSegmentSize);
 		global.dataState = AWAITING_SEGMENT_SIZES;
@@ -140,7 +140,7 @@ void AddressMode(){
 	*bufferSPI_TX =  64 | (global.addressSubMode<<4);
 	*(bufferSPI_TX+1) = 0;
 	global.dataState = SENDING_ADDRESS_HEADER;
-	debugPrint("SEND ADDR HEADER %d \n",bufferSPI_TX);
+	//debugPrint("SEND ADDR HEADER %d \n",bufferSPI_TX);
 	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
 }
 
@@ -158,7 +158,7 @@ void SendConfHeader(){
 	*bufferSPI_TX =  192;
 	*(bufferSPI_TX+1) = globalDisplayInfo.totalPanels;
 	global.dataState = SENDING_CONF_HEADER;
-	debugPrint("SEND CONF HEADER %d \n",*(bufferSPI_TX+1));
+	//debugPrint("SEND CONF HEADER %d \n",*(bufferSPI_TX+1));
 	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
 }
 
@@ -309,6 +309,9 @@ void SendPanelStream(){
 	//SEND EACH PANEL OF THE CURRENT SEGMENT OUT IN TURN...
 	uint16_t dataLen = panelInfoLookup[global.lastPanelSent].ledByteSize+panelInfoLookup[global.lastPanelSent].edgeByteSize;
 	//debugPrint("Transmit Panel Data %d\n",(uint16_t*)dataLen);
+	debugPrint("Sending Panel %d\n",(uint16_t*)global.lastPanelSent);
+	debugPrint("Pane Size %d\n",(uint16_t*)dataLen);
+	debugPrint("Curr offset size %d\n",(uint16_t*)global.currentSegmentOffset);
 
 	HAL_SPI_Transmit_DMA(&hspi2, (bufferSPI_RX+global.currentSegmentOffset), dataLen);
 	global.currentSegmentOffset += dataLen;
@@ -320,14 +323,19 @@ void SendPanelStream(){
 
 void NextPanelStream(){
 	if(global.currentSegmentOffset == *(segmentSizes+global.currentDataSegment)){
+		debugPrint("Offset match %d\n",(uint16_t*)global.currentSegmentOffset);
+		debugPrint("Seg %d\n",(uint16_t*)global.currentDataSegment);
 		global.dataState = PIXEL_DATA_STREAM;
-		global.lastPanelSent=0;
 		global.currentSegmentOffset=0;
 		global.returnDataOffset=0;
 		global.packets++;
+		global.lastPanelSent++;
 		global.currentDataSegment++;
 		if(global.currentDataSegment==global.dataSegments){
 			global.currentDataSegment = 0;
+		}
+		if(global.lastPanelSent == globalDisplayInfo.totalPanels){
+			global.lastPanelSent=0;
 		}
 		HAL_SPI_TransmitReceive_DMA(&hspi1, bufferSPI_TX, bufferSPI_RX, *(segmentSizes+global.currentDataSegment));
 		ReturnSig();
@@ -375,8 +383,9 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
 			EnableRS485RX();
 			DisablePiRX();
 
-			//HAL_SPI_Receive_DMA(&hspi1, returnData, dataLen);
+			HAL_SPI_Receive_DMA(&hspi1, returnData, dataLen);
 			//DEBUG ALTERNATIVE WITHOUT PANELS ATTACHED
+			/*
 			for(uint16_t i=0;i<dataLen;i++){
 				asm("nop");
 				asm("nop");
@@ -389,6 +398,7 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
 				asm("nop");
 				//8 NOPS EMULATE THE FACT THAT OUR DATABUS IS LIMITE TO 8MHZ. 1 EXTRA NOP TO ACCOUNT FOR OVERHEADS.
 			}
+			*/
 			//debugPrint("Waited\n",(uint8_t*)"");
 			HAL_SPI_RxCpltCallback(&hspi1);
 		}
