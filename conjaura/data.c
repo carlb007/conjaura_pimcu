@@ -140,6 +140,7 @@ void AddressMode(){
 	*bufferSPI_TX =  64 | (global.addressSubMode<<4);
 	*(bufferSPI_TX+1) = 0;
 	global.dataState = SENDING_ADDRESS_HEADER;
+	debugPrint("SEND ADDR HEADER %d \n",bufferSPI_TX);
 	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
 }
 
@@ -157,6 +158,7 @@ void SendConfHeader(){
 	*bufferSPI_TX =  192;
 	*(bufferSPI_TX+1) = globalDisplayInfo.totalPanels;
 	global.dataState = SENDING_CONF_HEADER;
+	debugPrint("SEND CONF HEADER %d \n",*(bufferSPI_TX+1));
 	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
 }
 
@@ -168,9 +170,8 @@ void SendColourHeader(){
 }
 
 void SendGammaHeader(){
-	//GAMMA DATA UTILISES THE FACT THAT THERES A SPARE BIT IN THE COLOUR MODE - IE ITS FIXED AT 3
-	//WE DONT BOTHER SENDING GAMMA SIZE OVER. ITS DEFINED BY THE COLOUR MODE: 768 FOR TC OR PALETTE, 128 FOR HC
-	*bufferSPI_TX = 128 | (3 << 4);
+	//GAMMA DATA IS SENT VIA THE CONFIG FLAG (192) WITH A SUB MODE OF 1 IN THE BITS --XX----
+	*bufferSPI_TX = 192 | 16;
 	*(bufferSPI_TX+1) = 0;
 	global.dataState = SENDING_GAMMA_HEADER;
 	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
@@ -353,6 +354,7 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
 		if(global.addressSubMode == WORKING || global.addressSubMode == RESTART){
 			global.dataState = COLLECTING_ADDRESS_DATA;
 			EnableRS485RX();
+			debugPrint("Collecting  Address Data %d\n",(uint16_t*)global.addressSubMode);
 			/*
 			AT THIS POINT THE PANELS ARE DOING WHATEVER THEY NEED TO DO. WE DONT CARE UNTIL WE GET OUR STAT REQUEST FROM PI
 			AND HEADER TO PUSH THEM BACK INTO STANDARD AWAITING HEADER STATES.
@@ -360,6 +362,7 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
 			*/
 		}
 		else{
+			debugPrint("Finished Address Data %d\n",(uint16_t*)global.addressSubMode);
 			ReturnSig();
 		}
 	}
