@@ -24,6 +24,7 @@ void HeaderMode(void);
 void ParseHeader(void);
 
 void SortSegmentSizes(void);
+void SendDataStreamHeader(void);
 void NextPanelStream(void);
 void SendPanelStream(void);
 

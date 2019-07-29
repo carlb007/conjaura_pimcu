@@ -10,8 +10,6 @@ extern SPI_HandleTypeDef hspi1,hspi2;
 
 void Initialise(void){
 	debugPrint("Ready \n",(uint16_t*)"");
-	* returnData = 1;
-	* (returnData+1) = 2;
 	EnablePiRX();
 	EnableRS485TX();
 	ReturnSig();
@@ -88,7 +86,7 @@ void ParseHeader(){
 		AddressMode();
 	}
 	else if (global.dataMode == CONFIG_MODE){
-		//debugPrint("CONFIG MODE\n",(uint8_t*)"");
+		debugPrint("CONFIG MODE\n",(uint8_t*)"");
 		global.configSubMode = (*bufferSPI_RX >>4)&0x3;							//b--XX----
 		global.currentDataSegment = 0;
 		if(global.configSubMode==PANEL_INF){
@@ -106,7 +104,7 @@ void ParseHeader(){
 			globalDisplayInfo.biasHC = 0;
 			if(globalDisplayInfo.colourMode==TRUE_COLOUR){
 				global.dataSegments = 0;
-				//debugPrint("COLOUR SUB MODE: TRUE COL\n",(uint8_t*)"");
+				debugPrint("COLOUR SUB MODE: TRUE COL\n",(uint8_t*)"");
 			}
 			else if(globalDisplayInfo.colourMode==HIGH_COLOUR){
 				globalDisplayInfo.biasHC = *(bufferSPI_RX)&0x3;
@@ -128,9 +126,10 @@ void ParseHeader(){
 			global.dataSegments = 1;
 			global.dataSegmentSize = ((*(bufferSPI_RX+3)&0x3F)<<8)|*(bufferSPI_RX+4);
 			HAL_SPI_Receive_DMA(&hspi1, bufferSPI_RX, global.dataSegmentSize);
+			debugPrint("GAMMA SUB MODE: AWAITING %d DATA BYTES \n",(uint16_t*)global.dataSegmentSize);
 			SendGammaHeader();
 			//global.dataState = AWAITING_GAMMA_DATA;
-			//debugPrint("GAMMA SUB MODE: AWAITING %d DATA BYTES \n",(uint16_t*)global.dataSegmentSize);
+
 		}
 	}
 	//ReturnSig();
@@ -149,9 +148,16 @@ void SortSegmentSizes(){
 		*(segmentSizes+x) = *(bufferSPI_RX+(x*2))<<8 | *(bufferSPI_RX+(x*2)+1);
 	}
 	global.currentDataSegment = 0;
-	global.dataState = PIXEL_DATA_STREAM;
 	HAL_SPI_TransmitReceive_DMA(&hspi1, returnData, bufferSPI_RX, *(segmentSizes+global.currentDataSegment));
-	ReturnSig();
+	SendDataStreamHeader();
+}
+
+void SendDataStreamHeader(){
+	//BLANK HEADER FOR DATA STREAM MODE.
+	global.dataState = SENDING_DATA_STREAM_HEADER;//PIXEL_DATA_STREAM;
+	*bufferSPI_TX =  0;
+	*(bufferSPI_TX+1) = 0;
+	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
 }
 
 void SendConfHeader(){
@@ -277,7 +283,7 @@ void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi){
 		SendColourData();
 	}
 	else if(global.dataState == AWAITING_GAMMA_DATA){
-		//debugPrint("GOT GAMMA DATA. FORWARDING HEADER AND DATA\n",(uint8_t*)"");
+		debugPrint("GOT GAMMA DATA. FORWARDING HEADER AND DATA\n",(uint8_t*)"");
 		global.dataSegments = 0;
 		SendGammaData();
 	}
@@ -290,6 +296,7 @@ void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi){
 		global.returnDataOffset += len;
 		EnableRS485TX();
 		EnablePiRX();
+		debugPrint("GOT RETURN DATA\n",(uint8_t*)"");
 		NextPanelStream();
 	}
 }
@@ -306,12 +313,14 @@ void HAL_SPI_TxHalfCpltCallback(SPI_HandleTypeDef *hspi){
 }
 
 void SendPanelStream(){
+	//EnableRS485TX();
 	//SEND EACH PANEL OF THE CURRENT SEGMENT OUT IN TURN...
 	uint16_t dataLen = panelInfoLookup[global.lastPanelSent].ledByteSize+panelInfoLookup[global.lastPanelSent].edgeByteSize;
 	//debugPrint("Transmit Panel Data %d\n",(uint16_t*)dataLen);
 	debugPrint("Sending Panel %d\n",(uint16_t*)global.lastPanelSent);
+	debugPrint("RX STate (should be 0) %d\n",(uint16_t*)global.rs485RXMode);
 	debugPrint("Pane Size %d\n",(uint16_t*)dataLen);
-	debugPrint("Curr offset size %d\n",(uint16_t*)global.currentSegmentOffset);
+	//debugPrint("Curr offset size %d\n",(uint16_t*)global.currentSegmentOffset);
 
 	HAL_SPI_Transmit_DMA(&hspi2, (bufferSPI_RX+global.currentSegmentOffset), dataLen);
 	global.currentSegmentOffset += dataLen;
@@ -322,9 +331,11 @@ void SendPanelStream(){
 }
 
 void NextPanelStream(){
+	//EnableRS485TX();
+	//DisablePiRX();
 	if(global.currentSegmentOffset == *(segmentSizes+global.currentDataSegment)){
-		debugPrint("Offset match %d\n",(uint16_t*)global.currentSegmentOffset);
-		debugPrint("Seg %d\n",(uint16_t*)global.currentDataSegment);
+		//debugPrint("Offset match %d\n",(uint16_t*)global.currentSegmentOffset);
+		//debugPrint("Seg %d\n",(uint16_t*)global.currentDataSegment);
 		global.dataState = PIXEL_DATA_STREAM;
 		global.currentSegmentOffset=0;
 		global.returnDataOffset=0;
@@ -374,16 +385,20 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
 			ReturnSig();
 		}
 	}
-	if(global.dataState == SENDING_PIXEL_DATA){
+	else if(global.dataState == SENDING_DATA_STREAM_HEADER){
+		global.dataState = PIXEL_DATA_STREAM;
+	}
+	else if(global.dataState == SENDING_PIXEL_DATA){
 		//DATA PANEL WITHIN SEGMENT SENT. NOW WAIT FOR RETURN RESPONSE IF NEEDED...
 		uint16_t dataLen = panelInfoLookup[global.lastPanelSent].touchByteSize+panelInfoLookup[global.lastPanelSent].periperalByteSize;
 		if(dataLen>0){
-			//debugPrint("Wait response %d\n",(uint16_t*)dataLen);
+
 			//WAIT FOR DATA RETURN...
 			EnableRS485RX();
 			DisablePiRX();
 
 			HAL_SPI_Receive_DMA(&hspi1, returnData, dataLen);
+			debugPrint("Wait response %d\n",(uint16_t*)dataLen);
 			//DEBUG ALTERNATIVE WITHOUT PANELS ATTACHED
 			/*
 			for(uint16_t i=0;i<dataLen;i++){
@@ -400,14 +415,14 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
 			}
 			*/
 			//debugPrint("Waited\n",(uint8_t*)"");
-			HAL_SPI_RxCpltCallback(&hspi1);
+			//HAL_SPI_RxCpltCallback(&hspi1);
 		}
 		else{
-			//debugPrint("Skip retur wait\n",(uint8_t*)"");
+			debugPrint("Skip return wait\n",(uint8_t*)"");
 			NextPanelStream();
 		}
 	}
-	if(global.dataState != SENDING_PIXEL_DATA && global.dataState != COLLECTING_ADDRESS_DATA){
+	if(global.dataState != SENDING_PIXEL_DATA && global.dataState != SENDING_ADDRESS_HEADER){
 		ReturnSig();
 	}
 }
