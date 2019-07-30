@@ -131,7 +131,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     __HAL_LINKDMA(hspi,hdmarx,hdma_spi1_rx);
 
     /* SPI1_TX Init */
-    hdma_spi1_tx.Instance = DMA1_Channel3;
+    hdma_spi1_tx.Instance = DMA1_Channel4;
     hdma_spi1_tx.Init.Request = DMA_REQUEST_SPI1_TX;
     hdma_spi1_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
     hdma_spi1_tx.Init.PeriphInc = DMA_PINC_DISABLE;

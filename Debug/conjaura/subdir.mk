@@ -4,16 +4,25 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../conjaura/colour.c \
 ../conjaura/data.c \
-../conjaura/globals.c 
+../conjaura/data_stream.c \
+../conjaura/globals.c \
+../conjaura/panel_config.c 
 
 OBJS += \
+./conjaura/colour.o \
 ./conjaura/data.o \
-./conjaura/globals.o 
+./conjaura/data_stream.o \
+./conjaura/globals.o \
+./conjaura/panel_config.o 
 
 C_DEPS += \
+./conjaura/colour.d \
 ./conjaura/data.d \
-./conjaura/globals.d 
+./conjaura/data_stream.d \
+./conjaura/globals.d \
+./conjaura/panel_config.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

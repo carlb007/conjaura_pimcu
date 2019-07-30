@@ -7,9 +7,10 @@ Src/stm32g0xx_it.o: ../Src/stm32g0xx_it.c \
  G:/STM32/conjaura_pimcu/Drivers/CMSIS/Device/ST/STM32G0xx/Include/stm32g0xx.h \
  G:/STM32/conjaura_pimcu/Drivers/CMSIS/Device/ST/STM32G0xx/Include/stm32g070xx.h \
  G:/STM32/conjaura_pimcu/Drivers/CMSIS/Include/core_cm0plus.h \
- G:/STM32/conjaura_pimcu/Drivers/CMSIS/Include/core_cmInstr.h \
+ G:/STM32/conjaura_pimcu/Drivers/CMSIS/Include/cmsis_version.h \
+ G:/STM32/conjaura_pimcu/Drivers/CMSIS/Include/cmsis_compiler.h \
  G:/STM32/conjaura_pimcu/Drivers/CMSIS/Include/cmsis_gcc.h \
- G:/STM32/conjaura_pimcu/Drivers/CMSIS/Include/core_cmFunc.h \
+ G:/STM32/conjaura_pimcu/Drivers/CMSIS/Include/mpu_armv7.h \
  G:/STM32/conjaura_pimcu/Drivers/CMSIS/Device/ST/STM32G0xx/Include/system_stm32g0xx.h \
  G:/STM32/conjaura_pimcu/Drivers/STM32G0xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h \
  G:/STM32/conjaura_pimcu/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_rcc.h \
@@ -28,6 +29,7 @@ Src/stm32g0xx_it.o: ../Src/stm32g0xx_it.c \
  G:/STM32/conjaura_pimcu/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi_ex.h \
  G:/STM32/conjaura_pimcu/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart.h \
  G:/STM32/conjaura_pimcu/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h \
+ G:/STM32/conjaura_pimcu/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_system.h \
  G:/STM32/conjaura_pimcu/Inc/stm32g0xx_it.h
 
 G:/STM32/conjaura_pimcu/Inc/main.h:
@@ -46,11 +48,13 @@ G:/STM32/conjaura_pimcu/Drivers/CMSIS/Device/ST/STM32G0xx/Include/stm32g070xx.h:
 
 G:/STM32/conjaura_pimcu/Drivers/CMSIS/Include/core_cm0plus.h:
 
-G:/STM32/conjaura_pimcu/Drivers/CMSIS/Include/core_cmInstr.h:
+G:/STM32/conjaura_pimcu/Drivers/CMSIS/Include/cmsis_version.h:
+
+G:/STM32/conjaura_pimcu/Drivers/CMSIS/Include/cmsis_compiler.h:
 
 G:/STM32/conjaura_pimcu/Drivers/CMSIS/Include/cmsis_gcc.h:
 
-G:/STM32/conjaura_pimcu/Drivers/CMSIS/Include/core_cmFunc.h:
+G:/STM32/conjaura_pimcu/Drivers/CMSIS/Include/mpu_armv7.h:
 
 G:/STM32/conjaura_pimcu/Drivers/CMSIS/Device/ST/STM32G0xx/Include/system_stm32g0xx.h:
 
@@ -87,5 +91,7 @@ G:/STM32/conjaura_pimcu/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_spi_ex.h:
 G:/STM32/conjaura_pimcu/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart.h:
 
 G:/STM32/conjaura_pimcu/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h:
+
+G:/STM32/conjaura_pimcu/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_system.h:
 
 G:/STM32/conjaura_pimcu/Inc/stm32g0xx_it.h:

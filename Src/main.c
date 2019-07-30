@@ -24,6 +24,9 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 # include "globals.h"
+# include "colour.h"
+# include "panel_config.h"
+# include "data_stream.h"
 # include "data.h"
 /* USER CODE END Includes */
 
@@ -317,6 +320,7 @@ static void MX_USART1_UART_Init(void)
   */
 static void MX_DMA_Init(void) 
 {
+
   /* DMA controller clock enable */
   __HAL_RCC_DMA1_CLK_ENABLE();
 
@@ -327,6 +331,9 @@ static void MX_DMA_Init(void)
   /* DMA1_Channel2_3_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel2_3_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel2_3_IRQn);
+  /* DMA1_Ch4_7_DMAMUX1_OVR_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Ch4_7_DMAMUX1_OVR_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Ch4_7_DMAMUX1_OVR_IRQn);
 
 }
 
@@ -366,7 +373,7 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = SEL_READ_WRITE_Pin|STAT2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/

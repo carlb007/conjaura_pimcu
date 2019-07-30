@@ -8,7 +8,6 @@
 
 uint8_t * bufferSPI_RX = spiBufferRX;
 uint8_t * bufferSPI_TX = spiBufferTX;
-uint8_t * returnData = panelReturnData;
 uint16_t * segmentSizes = segmentSizeLookup;
 
 

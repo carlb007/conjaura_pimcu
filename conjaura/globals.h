@@ -121,11 +121,7 @@ uint8_t * bufferSPI_RX;
 uint8_t spiBufferTX[TX_BUFFER_SIZE];
 uint8_t * bufferSPI_TX;
 
-uint8_t panelReturnData[TOUCH_BUFFER_SIZE+PERIPHERAL_SIZE];		//COMBINED RETURN DATA FROM ALL PANELS IN CONNECTED CHAIN. FIRST 2048 RESERVED FOR TOUCH.
-uint8_t * returnData;
-
 uint16_t segmentSizeLookup[MAX_SEGMENTS];
-uint16_t * segmentSizes;
 
 //struct PanelInfLookup
 

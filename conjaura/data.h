@@ -5,9 +5,13 @@
  *      Author: me
  */
 #include "globals.h"
+#include "panel_config.h"
+# include "data_stream.h"
 
 #ifndef DATA_H_
 #define DATA_H_
+
+uint16_t returnDataLen;
 
 void EnableRS485RX(void);
 void EnableRS485TX(void);
@@ -23,18 +27,8 @@ void ReturnSig(void);
 void HeaderMode(void);
 void ParseHeader(void);
 
-void SortSegmentSizes(void);
-void SendDataStreamHeader(void);
-void NextPanelStream(void);
-void SendPanelStream(void);
 
-void AddressMode(void);
-void SendConfHeader(void);
-void SendColourHeader(void);
-void SendGammaHeader(void);
-void SendColourData(void);
-void SendGammaData(void);
 
-void parseConfData(void);
+
 
 #endif /* DATA_H_ */
