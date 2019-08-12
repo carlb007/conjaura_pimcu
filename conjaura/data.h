@@ -19,7 +19,6 @@ void EnableRS485TX(void);
 void EnablePiRX(void);
 void DisablePiRX(void);
 
-void Initialise(void);
 void SyncSig(void);
 void ClearReturnSig(void);
 void ReturnSig(void);
@@ -27,6 +26,7 @@ void ReturnSig(void);
 void HeaderMode(void);
 void ParseHeader(void);
 
+void SPI2TXComplete(void);
 
 
 

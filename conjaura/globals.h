@@ -11,7 +11,7 @@
 #ifndef GLOBALS_H_
 #define GLOBALS_H_
 
-#define DEBUGMODE 0							//ENABLE PRINTF OUTPUTS
+#define DEBUGMODE 1							//ENABLE PRINTF OUTPUTS
 #define DISABLEWATCHDOG 0					//FORCE REFRESH OF WATCHDOG
 #define TRUE 1
 #define FALSE 0
@@ -27,7 +27,7 @@
  * In a situation where multiple peripherals were all closely located (IE panels 1,2,3,4,5 etc) this buffer could end up over-running depending on the data fed back.
  */
 
-#define RX_BUFFER_SIZE 10240				//MAX DATA FEED LENGTH IN A SINGLE BATCH
+#define RX_BUFFER_SIZE 10240				//MAX DATA FEED LENGTH IN A SINGLE BATCH RECEIVED FROM PI
 #define TX_BUFFER_SIZE 1536					//TRANSMISSION MAX SIZE
 
 #define TOUCH_BUFFER_SIZE 768				//DATA STORE FOR PANEL DATA SENDS. ASSUMES 4 BYTES PER 8x8 PANEL UNIT
@@ -128,6 +128,6 @@ uint16_t segmentSizeLookup[MAX_SEGMENTS];
 DATASTATES currentMode;
 
 void debugPrint(char *data, uint8_t *params);
-
+void Initiliase(void);
 
 #endif /* GLOBALS_H_ */

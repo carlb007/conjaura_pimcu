@@ -34,7 +34,8 @@ void SendDataStreamHeader(){
 	global.dataState = SENDING_DATA_STREAM_HEADER;//PIXEL_DATA_STREAM;
 	spiBufferTX[0] = 0;
 	spiBufferTX[1] = 0;
-	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
+	//HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
+	TransmitSPI2DMA(bufferSPI_TX, 2);
 }
 
 
@@ -50,7 +51,8 @@ void HandleStreamReturn(){
 void SendPanelStream(){
 	//SEND EACH PANEL OF THE CURRENT SEGMENT OUT IN TURN...
 	uint16_t dataLen = panelInfoLookup[global.lastPanelSent].ledByteSize+panelInfoLookup[global.lastPanelSent].edgeByteSize;
-	HAL_SPI_Transmit_DMA(&hspi2, (bufferSPI_RX+global.currentSegmentOffset), dataLen);
+	//HAL_SPI_Transmit_DMA(&hspi2, (bufferSPI_RX+global.currentSegmentOffset), dataLen);
+	TransmitSPI2DMA((bufferSPI_RX+global.currentSegmentOffset), dataLen);
 	global.currentSegmentOffset += dataLen;
 }
 

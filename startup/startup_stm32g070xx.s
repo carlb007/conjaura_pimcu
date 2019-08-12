@@ -147,7 +147,7 @@ g_pfnVectors:
   .word  0                                 /* reserved                     */
   .word  DMA1_Channel1_IRQHandler          /* DMA1 Channel 1               */
   .word  DMA1_Channel2_3_IRQHandler        /* DMA1 Channel 2 and Channel 3 */
-  .word  DMA1_Ch4_7_DMAMUX1_OVR_IRQHandler /* DMA1 Channel 4 to Channel 7, DMAMUX1 overrun */
+  .word  DMA1_47_IRQ 					   /* DMA1 Channel 4 to Channel 7, DMAMUX1 overrun */
   .word  ADC1_IRQHandler                   /* ADC1                         */
   .word  TIM1_BRK_UP_TRG_COM_IRQHandler    /* TIM1 Break, Update, Trigger and Commutation */
   .word  TIM1_CC_IRQHandler                /* TIM1 Capture Compare         */
@@ -217,8 +217,8 @@ g_pfnVectors:
   .weak      DMA1_Channel2_3_IRQHandler
   .thumb_set DMA1_Channel2_3_IRQHandler,Default_Handler
 
-  .weak      DMA1_Ch4_7_DMAMUX1_OVR_IRQHandler
-  .thumb_set DMA1_Ch4_7_DMAMUX1_OVR_IRQHandler,Default_Handler
+  .weak      DMA1_47_IRQ
+  .thumb_set DMA1_47_IRQ,Default_Handler
 
   .weak      ADC1_IRQHandler
   .thumb_set ADC1_IRQHandler,Default_Handler

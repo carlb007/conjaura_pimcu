@@ -7,22 +7,28 @@ C_SRCS += \
 ../conjaura/colour.c \
 ../conjaura/data.c \
 ../conjaura/data_stream.c \
+../conjaura/dma.c \
 ../conjaura/globals.c \
-../conjaura/panel_config.c 
+../conjaura/panel_config.c \
+../conjaura/spi.c 
 
 OBJS += \
 ./conjaura/colour.o \
 ./conjaura/data.o \
 ./conjaura/data_stream.o \
+./conjaura/dma.o \
 ./conjaura/globals.o \
-./conjaura/panel_config.o 
+./conjaura/panel_config.o \
+./conjaura/spi.o 
 
 C_DEPS += \
 ./conjaura/colour.d \
 ./conjaura/data.d \
 ./conjaura/data_stream.d \
+./conjaura/dma.d \
 ./conjaura/globals.d \
-./conjaura/panel_config.d 
+./conjaura/panel_config.d \
+./conjaura/spi.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

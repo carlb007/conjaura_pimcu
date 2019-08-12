@@ -30,8 +30,10 @@ Src/main.o: ../Src/main.c G:/STM32/conjaura_pimcu/Inc/main.h \
  G:/STM32/conjaura_pimcu/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h \
  G:/STM32/conjaura_pimcu/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_system.h \
  G:/STM32/conjaura_pimcu/conjaura/globals.h \
- G:/STM32/conjaura_pimcu/conjaura/colour.h \
+ G:/STM32/conjaura_pimcu/conjaura/dma.h \
  G:/STM32/conjaura_pimcu/conjaura/globals.h \
+ G:/STM32/conjaura_pimcu/conjaura/spi.h \
+ G:/STM32/conjaura_pimcu/conjaura/colour.h \
  G:/STM32/conjaura_pimcu/conjaura/panel_config.h \
  G:/STM32/conjaura_pimcu/conjaura/data_stream.h \
  G:/STM32/conjaura_pimcu/conjaura/data.h \
@@ -103,9 +105,13 @@ G:/STM32/conjaura_pimcu/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_system.h:
 
 G:/STM32/conjaura_pimcu/conjaura/globals.h:
 
-G:/STM32/conjaura_pimcu/conjaura/colour.h:
+G:/STM32/conjaura_pimcu/conjaura/dma.h:
 
 G:/STM32/conjaura_pimcu/conjaura/globals.h:
+
+G:/STM32/conjaura_pimcu/conjaura/spi.h:
+
+G:/STM32/conjaura_pimcu/conjaura/colour.h:
 
 G:/STM32/conjaura_pimcu/conjaura/panel_config.h:
 

@@ -23,3 +23,12 @@ void debugPrint(char *data, uint8_t *params){
 	#endif
 }
 
+void Initialise(void){
+	debugPrint("Ready \n",(uint16_t*)"");
+	EnablePiRX();
+	EnableRS485TX();
+	InitSPI();
+	InitDMA();
+	ReturnSig();
+
+}

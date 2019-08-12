@@ -24,6 +24,8 @@
 "conjaura/colour.o"
 "conjaura/data.o"
 "conjaura/data_stream.o"
+"conjaura/dma.o"
 "conjaura/globals.o"
 "conjaura/panel_config.o"
+"conjaura/spi.o"
 "startup/startup_stm32g070xx.o"

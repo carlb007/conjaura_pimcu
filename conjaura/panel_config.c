@@ -30,7 +30,8 @@ void AddressMode(){
 	*(bufferSPI_TX+1) = 0;
 	global.dataState = SENDING_ADDRESS_HEADER;
 	debugPrint("SEND ADDR HEADER %d \n",bufferSPI_TX);
-	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
+	//HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
+	TransmitSPI2DMA(bufferSPI_TX, 2);
 }
 
 
@@ -44,7 +45,8 @@ void SendConfHeader(){
 	*bufferSPI_TX =  192;
 	*(bufferSPI_TX+1) = globalDisplayInfo.totalPanels;
 	global.dataState = SENDING_CONF_HEADER;
-	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
+	//HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
+	TransmitSPI2DMA(bufferSPI_TX, 2);
 }
 
 
@@ -107,5 +109,6 @@ void parseConfData(){
 		panelInfoLookup[panel].periperalByteSize = periphBytes;
 	}
 	global.dataState = SENDING_CONF_DATA;
-	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_RX, globalDisplayInfo.totalPanels*4);
+	//HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_RX, globalDisplayInfo.totalPanels*4);
+	TransmitSPI2DMA(bufferSPI_RX, globalDisplayInfo.totalPanels*4);
 }

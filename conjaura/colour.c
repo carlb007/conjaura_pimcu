@@ -45,7 +45,8 @@ void SendColourHeader(){
 	*bufferSPI_TX =  128 | (globalDisplayInfo.colourMode << 4) | (globalDisplayInfo.biasHC << 2) | globalDisplayInfo.bamBits;
 	*(bufferSPI_TX+1) = globalDisplayInfo.paletteSize;
 	global.dataState = SENDING_PALETTE_HEADER;
-	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
+	//HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
+	TransmitSPI2DMA(bufferSPI_TX, 2);
 }
 
 
@@ -54,7 +55,8 @@ void SendGammaHeader(){
 	*bufferSPI_TX = 192 | 16;
 	*(bufferSPI_TX+1) = 0;
 	global.dataState = SENDING_GAMMA_HEADER;
-	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
+	//HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_TX, 2);
+	TransmitSPI2DMA(bufferSPI_TX, 2);
 }
 
 
@@ -62,7 +64,8 @@ void SendColourData(){
 	global.dataSegments = 0;
 	uint16_t palSize = (globalDisplayInfo.paletteSize+1)*3;
 	global.dataState = SENDING_PALETTE_DATA;
-	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_RX, palSize);
+	//HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_RX, palSize);
+	TransmitSPI2DMA(bufferSPI_RX, palSize);
 }
 
 
@@ -78,5 +81,6 @@ void SendGammaData(){
 		}
 	}
 	global.dataState = SENDING_GAMMA_DATA;
-	HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_RX, gamSize);
+	//HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_RX, gamSize);
+	TransmitSPI2DMA(bufferSPI_RX, gamSize);
 }

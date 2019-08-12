@@ -163,7 +163,7 @@ void DMA1_Channel1_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
 
   /* USER CODE END DMA1_Channel1_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_spi2_tx);
+  HAL_DMA_IRQHandler(&hdma_spi1_tx);
   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
 
   /* USER CODE END DMA1_Channel1_IRQn 1 */
@@ -191,7 +191,7 @@ void DMA1_Ch4_7_DMAMUX1_OVR_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Ch4_7_DMAMUX1_OVR_IRQn 0 */
 
   /* USER CODE END DMA1_Ch4_7_DMAMUX1_OVR_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_spi1_tx);
+  HAL_DMA_IRQHandler(&hdma_spi2_tx);
   /* USER CODE BEGIN DMA1_Ch4_7_DMAMUX1_OVR_IRQn 1 */
 
   /* USER CODE END DMA1_Ch4_7_DMAMUX1_OVR_IRQn 1 */

@@ -9,12 +9,7 @@
 extern SPI_HandleTypeDef hspi1,hspi2;
 
 
-void Initialise(void){
-	debugPrint("Ready \n",(uint16_t*)"");
-	EnablePiRX();
-	EnableRS485TX();
-	ReturnSig();
-}
+
 
 
 void SyncSig(void){
@@ -77,7 +72,7 @@ void ParseHeader(){
 		AddressMode();
 	}
 	else if (global.dataMode == CONFIG_MODE){
-		debugPrint("CONFIG MODE\n",(uint8_t*)"");
+		//debugPrint("CONFIG MODE\n",(uint8_t*)"");
 		global.configSubMode = (*bufferSPI_RX >>4)&0x3;							//b--XX----
 		global.currentDataSegment = 0;
 		if(global.configSubMode==PANEL_INF){
@@ -121,13 +116,14 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi){
 }
 
 
-void HAL_SPI_TxHalfCpltCallback(SPI_HandleTypeDef *hspi){
+//void HAL_SPI_TxHalfCpltCallback(SPI_HandleTypeDef *hspi){
 	//debugPrint("HALF\n",(uint8_t*)"");
-	returnDataLen = panelInfoLookup[global.lastPanelSent].touchByteSize+panelInfoLookup[global.lastPanelSent].periperalByteSize;
-}
+	//returnDataLen = panelInfoLookup[global.lastPanelSent].touchByteSize+panelInfoLookup[global.lastPanelSent].periperalByteSize;
+//}
 
 
-void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
+void SPI2TXComplete(){
+	while((SPI2->SR & SPI_SR_BSY));
 	if(global.dataState == SENDING_PIXEL_DATA){
 		//DATA PANEL WITHIN SEGMENT SENT. NOW WAIT FOR RETURN RESPONSE IF NEEDED...
 		//uint16_t dataLen = panelInfoLookup[global.lastPanelSent].touchByteSize+panelInfoLookup[global.lastPanelSent].periperalByteSize;
