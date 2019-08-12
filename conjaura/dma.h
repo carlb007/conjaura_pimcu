@@ -19,8 +19,10 @@ void DMA1_1_IRQ(void);
 void DMA1_23_IRQ(void);
 void DMA1_47_IRQ(void);
 
-void ReceiveSPI2DMA(uint16_t);
+void ReceiveSPI1DMA(uint8_t*, uint16_t);
 void TransmitSPI1DMA(uint8_t*, uint16_t);
 void TransmitSPI2DMA(uint8_t*, uint16_t);
+
+void TransmitReceiveSPI1DMA(uint8_t*, uint8_t*, uint16_t);
 
 #endif /* DMA_H_ */

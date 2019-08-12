@@ -25,7 +25,8 @@ void HandleColourHeader(){
 		globalDisplayInfo.paletteSize = *(bufferSPI_RX+2);
 		global.dataSegments = 1;
 		global.dataSegmentSize = ((*(bufferSPI_RX+3)&0x3F)<<8)|*(bufferSPI_RX+4);
-		HAL_SPI_Receive_DMA(&hspi1, bufferSPI_RX, global.dataSegmentSize);
+		//HAL_SPI_Receive_DMA(&hspi1, bufferSPI_RX, global.dataSegmentSize);
+		ReceiveSPI1DMA(bufferSPI_RX, global.dataSegmentSize);
 		//debugPrint("COLOUR SUB MODE: PAL COL, Size: %d\n",(uint8_t*)globalDisplayInfo.paletteSize);
 	}
 	globalDisplayInfo.bamBits = *(bufferSPI_RX+1)&0x3;
@@ -36,7 +37,8 @@ void HandleColourHeader(){
 void HandleGammaHeader(){
 	global.dataSegments = 1;
 	global.dataSegmentSize = ((*(bufferSPI_RX+3)&0x3F)<<8)|*(bufferSPI_RX+4);
-	HAL_SPI_Receive_DMA(&hspi1, bufferSPI_RX, global.dataSegmentSize);
+	//HAL_SPI_Receive_DMA(&hspi1, bufferSPI_RX, global.dataSegmentSize);
+	ReceiveSPI1DMA(bufferSPI_RX, global.dataSegmentSize);
 	SendGammaHeader();
 }
 

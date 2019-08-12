@@ -40,7 +40,8 @@ void SendConfHeader(){
 	//PREP TO RECEIVE SEGMENTS
 	global.dataSegments = 1;
 	global.dataSegmentSize = ((*(bufferSPI_RX+3)&0x3F)<<8)|*(bufferSPI_RX+4);
-	HAL_SPI_Receive_DMA(&hspi1, bufferSPI_RX, global.dataSegmentSize);
+	//HAL_SPI_Receive_DMA(&hspi1, bufferSPI_RX, global.dataSegmentSize);
+	ReceiveSPI1DMA(bufferSPI_RX, global.dataSegmentSize);
 	//SEND OUT THE CONF HEADER
 	*bufferSPI_TX =  192;
 	*(bufferSPI_TX+1) = globalDisplayInfo.totalPanels;

@@ -26,6 +26,9 @@ void ReturnSig(void);
 void HeaderMode(void);
 void ParseHeader(void);
 
+void SPI1RXComplete(void);
+void SPI1TXComplete(void);
+
 void SPI2TXComplete(void);
 
 

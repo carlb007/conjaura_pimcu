@@ -18,7 +18,8 @@ void SyncSig(void){
 		ClearReturnSig();
 	}
 	else{
-		HAL_SPI_Receive_DMA(&hspi1, bufferSPI_RX, 5);
+		//HAL_SPI_Receive_DMA(&hspi1, bufferSPI_RX, 5);
+		ReceiveSPI1DMA(bufferSPI_RX,5);
 		global.dataState = AWAITING_HEADER;
 		EnablePiRX();
 		EnableRS485TX();
@@ -88,31 +89,39 @@ void ParseHeader(){
 }
 
 
-void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi){
-	if(global.dataState == AWAITING_HEADER){
-		ParseHeader();
+void SPI1RXComplete(){
+	while((SPI1->SR & SPI_SR_BSY));
+	if(global.txRXMode==TRUE){
+		global.txRXMode=FALSE;
+		global.dataState = SENDING_PIXEL_DATA;
+		SendPanelStream();
 	}
-	else if(global.dataState == AWAITING_CONF_DATA){
-		parseConfData();
-	}
-	else if(global.dataState == AWAITING_PALETTE_DATA){
-		SendColourData();
-	}
-	else if(global.dataState == AWAITING_GAMMA_DATA){
-		SendGammaData();
-	}
-	else if(global.dataState == AWAITING_SEGMENT_SIZES){
-		SortSegmentSizes();
-	}
-	else if(global.dataState == SENDING_PIXEL_DATA){
-		HandleStreamReturn();
+	else{
+		if(global.dataState == AWAITING_HEADER){
+			ParseHeader();
+		}
+		else if(global.dataState == AWAITING_CONF_DATA){
+			parseConfData();
+		}
+		else if(global.dataState == AWAITING_PALETTE_DATA){
+			SendColourData();
+		}
+		else if(global.dataState == AWAITING_GAMMA_DATA){
+			SendGammaData();
+		}
+		else if(global.dataState == AWAITING_SEGMENT_SIZES){
+			SortSegmentSizes();
+		}
+		else if(global.dataState == SENDING_PIXEL_DATA){
+			HandleStreamReturn();
+		}
 	}
 }
 
 
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi){
-	global.dataState = SENDING_PIXEL_DATA;
-	SendPanelStream();
+	//global.dataState = SENDING_PIXEL_DATA;
+	//SendPanelStream();
 }
 
 
@@ -130,7 +139,8 @@ void SPI2TXComplete(){
 		if(returnDataLen>0){
 			DisablePiRX();
 			EnableRS485RX();
-			HAL_SPI_Receive_DMA(&hspi1, bufferSPI_TX+global.returnDataOffset, returnDataLen);
+			//HAL_SPI_Receive_DMA(&hspi1, bufferSPI_TX+global.returnDataOffset, returnDataLen);
+			ReceiveSPI1DMA(bufferSPI_TX+global.returnDataOffset,5);
 		}
 		else{
 			//debugPrint("Skip return wait\n",(uint8_t*)"");

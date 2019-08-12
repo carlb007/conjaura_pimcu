@@ -97,6 +97,7 @@ struct Globals {
 	uint8_t addressesReceived;				//TRACKING OF USER TOUCHES DURING ADDRESS SETUP.
 	uint16_t packets;
 	uint8_t returnState;
+	uint8_t	txRXMode;						//TRACKING OF SPI TRANSMIT AND RECEIVE FLOW.
 } global;
 
 struct DispProperties {
