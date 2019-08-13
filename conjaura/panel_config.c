@@ -54,6 +54,7 @@ void SendConfHeader(){
 void parseConfData(){
 	uint8_t bytesPerLED;
 	global.dataSegments = 0;
+	global.totalReturnSize = 0;
 	if(globalDisplayInfo.colourMode == TRUE_COLOUR){
 		bytesPerLED = 3;
 	}
@@ -108,6 +109,7 @@ void parseConfData(){
 		panelInfoLookup[panel].edgeByteSize = edgeBytes;
 		panelInfoLookup[panel].touchByteSize = touchBytes;
 		panelInfoLookup[panel].periperalByteSize = periphBytes;
+		global.totalReturnSize += (touchBytes + periphBytes);
 	}
 	global.dataState = SENDING_CONF_DATA;
 	//HAL_SPI_Transmit_DMA(&hspi2, bufferSPI_RX, globalDisplayInfo.totalPanels*4);

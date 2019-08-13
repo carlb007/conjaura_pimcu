@@ -115,7 +115,8 @@ int main(void)
   //MX_SPI2_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  	__HAL_RCC_TIM6_CLK_ENABLE();
+
+  //__HAL_RCC_TIM6_CLK_ENABLE();
     TIM6->PSC = 0;
     TIM6->ARR = timeLen;
     TIM6->CR1 = 0;
@@ -123,7 +124,7 @@ int main(void)
     TIM6->SR = ~1;
     TIM6->DIER = 1;
 
-    HAL_NVIC_EnableIRQ(TIM6_IRQn);
+    //HAL_NVIC_EnableIRQ(TIM6_IRQn);
 
     Initialise();
   /* USER CODE END 2 */
@@ -161,9 +162,9 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV1;
-  RCC_OscInitStruct.PLL.PLLN = 16;
+  RCC_OscInitStruct.PLL.PLLN = 15;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV4;
+  RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV6;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -176,7 +177,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -252,7 +253,7 @@ static void MX_SPI2_Init(void)
   hspi2.Init.CLKPolarity = SPI_POLARITY_HIGH;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi2.Init.NSS = SPI_NSS_SOFT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;

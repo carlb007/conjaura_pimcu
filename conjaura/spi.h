@@ -12,6 +12,7 @@
 
 #define SPI_SPEED_CLK2 7<<3;
 #define SPI_SPEED_CLK8 2<<3;
+#define SPI_SPEED_CLK4 1<<3;
 #define SIZE_8BIT 7<<8;
 #define SPI_LSBFIRST 1<<7;
 

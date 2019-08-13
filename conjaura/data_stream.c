@@ -38,26 +38,28 @@ void SendDataStreamHeader(){
 
 
 void HandleStreamReturn(){
+	//FINALISE ALL RETURNED DATA FROM PANELS AND SWITCH MODES
 	EnableRS485TX();
 	EnablePiRX();
-	global.returnDataOffset += returnDataLen;
 	//debugPrint("GOT RETURN DATA\n",(uint8_t*)"");
+	global.returnState = 0;
+	global.panelsSent=0;
 	NextPanelStream();
 }
 
 
 void SendPanelStream(){
 	//SEND EACH PANEL OF THE CURRENT SEGMENT OUT IN TURN...
+	//printf("send %d segment %d segmentoffset %d\n",global.lastPanelSent,global.currentDataSegment,global.currentSegmentOffset);
 	uint16_t dataLen = panelInfoLookup[global.lastPanelSent].ledByteSize+panelInfoLookup[global.lastPanelSent].edgeByteSize;
-	//HAL_SPI_Transmit_DMA(&hspi2, (bufferSPI_RX+global.currentSegmentOffset), dataLen);
 	TransmitSPI2DMA((bufferSPI_RX+global.currentSegmentOffset), dataLen);
 	global.currentSegmentOffset += dataLen;
+	global.panelsSent++;
 }
 
 
 void NextPanelStream(){
 	if(global.currentSegmentOffset == segmentSizeLookup[global.currentDataSegment]){
-		global.dataState = PIXEL_DATA_STREAM;
 		global.currentSegmentOffset=0;
 		global.returnDataOffset=0;
 		global.packets++;
@@ -66,13 +68,23 @@ void NextPanelStream(){
 
 		if(global.currentDataSegment==global.dataSegments){
 			global.currentDataSegment = 0;
-		}
-		if(global.lastPanelSent == globalDisplayInfo.totalPanels){
 			global.lastPanelSent=0;
+			global.returnState = !global.returnState;
 		}
-		//HAL_SPI_TransmitReceive_DMA(&hspi1, bufferSPI_TX, bufferSPI_RX, segmentSizeLookup[global.currentDataSegment]);
-		TransmitReceiveSPI1DMA(bufferSPI_TX, bufferSPI_RX, segmentSizeLookup[global.currentDataSegment]);
-		ReturnSig();
+		//if(global.lastPanelSent == globalDisplayInfo.totalPanels){
+			//global.lastPanelSent=0;
+		//}
+		if(global.returnState == TRUE && global.totalReturnSize>0){
+			global.dataState = AWAITING_RETURN_DATA;
+			DisablePiRX();
+			EnableRS485RX();
+			ReceiveSPI1DMA(bufferSPI_TX,global.totalReturnSize);
+		}
+		else{
+			global.dataState = AWAITING_RXTX_DATA;
+			TransmitReceiveSPI1DMA(bufferSPI_TX, bufferSPI_RX, segmentSizeLookup[global.currentDataSegment]);
+			ReturnSig();
+		}
 	}
 	else{
 		global.lastPanelSent++;
