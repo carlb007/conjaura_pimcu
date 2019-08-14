@@ -39,12 +39,21 @@ void SendDataStreamHeader(){
 
 void HandleStreamReturn(){
 	//FINALISE ALL RETURNED DATA FROM PANELS AND SWITCH MODES
+	//for(uint8_t i=0;i<global.totalReturnSize;i++){
+	//	printf("%d: %d\n",i,bufferSPI_TX[i]);
+	//}
 	EnableRS485TX();
 	EnablePiRX();
 	//debugPrint("GOT RETURN DATA\n",(uint8_t*)"");
 	global.returnState = 0;
 	global.panelsSent=0;
-	NextPanelStream();
+	global.returnState = FALSE;
+	//printf("GOT Return\n");
+	//NextPanelStream();
+	global.dataState = AWAITING_RXTX_DATA;
+	TransmitReceiveSPI1DMA(bufferSPI_TX, bufferSPI_RX, segmentSizeLookup[global.currentDataSegment]);
+	//printf("ReturnSig\n");
+	ReturnSig();
 }
 
 
@@ -69,12 +78,14 @@ void NextPanelStream(){
 		if(global.currentDataSegment==global.dataSegments){
 			global.currentDataSegment = 0;
 			global.lastPanelSent=0;
-			global.returnState = !global.returnState;
+			if(global.totalReturnSize>0){
+				global.returnState = TRUE;
+			}
 		}
 		//if(global.lastPanelSent == globalDisplayInfo.totalPanels){
 			//global.lastPanelSent=0;
 		//}
-		if(global.returnState == TRUE && global.totalReturnSize>0){
+		if(global.returnState == TRUE){
 			global.dataState = AWAITING_RETURN_DATA;
 			DisablePiRX();
 			EnableRS485RX();
@@ -83,6 +94,7 @@ void NextPanelStream(){
 		else{
 			global.dataState = AWAITING_RXTX_DATA;
 			TransmitReceiveSPI1DMA(bufferSPI_TX, bufferSPI_RX, segmentSizeLookup[global.currentDataSegment]);
+			//printf("ReturnSig\n");
 			ReturnSig();
 		}
 	}
