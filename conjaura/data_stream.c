@@ -87,6 +87,7 @@ void NextPanelStream(){
 		//}
 		if(global.returnState == TRUE){
 			global.dataState = AWAITING_RETURN_DATA;
+			while((SPI1->SR &  (SPI_SR_FRLVL | SPI_SR_FTLVL | SPI_SR_BSY)));
 			DisablePiRX();
 			EnableRS485RX();
 			ReceiveSPI1DMA(bufferSPI_TX,global.totalReturnSize);

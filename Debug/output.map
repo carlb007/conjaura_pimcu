@@ -3726,7 +3726,7 @@ LOAD c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17
                 0x08000000                g_pfnVectors
                 0x080000b8                . = ALIGN (0x4)
 
-.text           0x080000b8     0x25e0
+.text           0x080000b8     0x263c
                 0x080000b8                . = ALIGN (0x4)
  *(.text)
  .text          0x080000b8       0x48 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
@@ -3811,229 +3811,232 @@ LOAD c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17
                 0x080018dc       0x7c Src/main.o
                 0x080018dc                SystemClock_Config
  .text.startup.main
-                0x08001958      0x158 Src/main.o
+                0x08001958      0x118 Src/main.o
                 0x08001958                main
  .text.TIM6_IRQHandler
-                0x08001ab0       0x34 Src/main.o
-                0x08001ab0                TIM6_IRQHandler
+                0x08001a70       0x34 Src/main.o
+                0x08001a70                TIM6_IRQHandler
  .text.HAL_MspInit
-                0x08001ae4       0x30 Src/stm32g0xx_hal_msp.o
-                0x08001ae4                HAL_MspInit
+                0x08001aa4       0x30 Src/stm32g0xx_hal_msp.o
+                0x08001aa4                HAL_MspInit
  .text.HAL_UART_MspInit
-                0x08001b14       0x60 Src/stm32g0xx_hal_msp.o
-                0x08001b14                HAL_UART_MspInit
+                0x08001ad4       0x60 Src/stm32g0xx_hal_msp.o
+                0x08001ad4                HAL_UART_MspInit
  .text.NMI_Handler
-                0x08001b74        0x4 Src/stm32g0xx_it.o
-                0x08001b74                NMI_Handler
+                0x08001b34        0x4 Src/stm32g0xx_it.o
+                0x08001b34                NMI_Handler
  .text.HardFault_Handler
-                0x08001b78        0x4 Src/stm32g0xx_it.o
-                0x08001b78                HardFault_Handler
+                0x08001b38        0x4 Src/stm32g0xx_it.o
+                0x08001b38                HardFault_Handler
  .text.SVC_Handler
-                0x08001b7c        0x4 Src/stm32g0xx_it.o
-                0x08001b7c                SVC_Handler
+                0x08001b3c        0x4 Src/stm32g0xx_it.o
+                0x08001b3c                SVC_Handler
  .text.PendSV_Handler
-                0x08001b80        0x4 Src/stm32g0xx_it.o
-                0x08001b80                PendSV_Handler
+                0x08001b40        0x4 Src/stm32g0xx_it.o
+                0x08001b40                PendSV_Handler
  .text.SysTick_Handler
-                0x08001b84        0x8 Src/stm32g0xx_it.o
-                0x08001b84                SysTick_Handler
+                0x08001b44        0x8 Src/stm32g0xx_it.o
+                0x08001b44                SysTick_Handler
  .text.SystemInit
-                0x08001b8c       0x10 Src/system_stm32g0xx.o
-                0x08001b8c                SystemInit
+                0x08001b4c       0x10 Src/system_stm32g0xx.o
+                0x08001b4c                SystemInit
  .text.HandleColourHeader
-                0x08001b9c       0xa8 conjaura/colour.o
-                0x08001b9c                HandleColourHeader
+                0x08001b5c       0xa8 conjaura/colour.o
+                0x08001b5c                HandleColourHeader
  .text.HandleGammaHeader
-                0x08001c44       0x48 conjaura/colour.o
-                0x08001c44                HandleGammaHeader
+                0x08001c04       0x48 conjaura/colour.o
+                0x08001c04                HandleGammaHeader
  .text.SendColourData
-                0x08001c8c       0x2c conjaura/colour.o
-                0x08001c8c                SendColourData
+                0x08001c4c       0x2c conjaura/colour.o
+                0x08001c4c                SendColourData
  .text.SendGammaData
-                0x08001cb8       0x40 conjaura/colour.o
-                0x08001cb8                SendGammaData
- .text.SyncSig  0x08001cf8       0x54 conjaura/data.o
-                0x08001cf8                SyncSig
+                0x08001c78       0x40 conjaura/colour.o
+                0x08001c78                SendGammaData
+ .text.SyncSig  0x08001cb8       0x54 conjaura/data.o
+                0x08001cb8                SyncSig
  .text.ReturnSig
-                0x08001d4c       0x18 conjaura/data.o
-                0x08001d4c                ReturnSig
+                0x08001d0c       0x18 conjaura/data.o
+                0x08001d0c                ReturnSig
  .text.EnableRS485RX
-                0x08001d64       0x18 conjaura/data.o
-                0x08001d64                EnableRS485RX
+                0x08001d24       0x18 conjaura/data.o
+                0x08001d24                EnableRS485RX
  .text.EnableRS485TX
-                0x08001d7c       0x18 conjaura/data.o
-                0x08001d7c                EnableRS485TX
+                0x08001d3c       0x18 conjaura/data.o
+                0x08001d3c                EnableRS485TX
  .text.EnablePiRX
-                0x08001d94       0x14 conjaura/data.o
-                0x08001d94                EnablePiRX
+                0x08001d54       0x14 conjaura/data.o
+                0x08001d54                EnablePiRX
  .text.DisablePiRX
-                0x08001da8       0x14 conjaura/data.o
-                0x08001da8                DisablePiRX
+                0x08001d68       0x14 conjaura/data.o
+                0x08001d68                DisablePiRX
  .text.SPI1RXComplete
-                0x08001dbc       0xb0 conjaura/data.o
-                0x08001dbc                SPI1RXComplete
+                0x08001d7c       0xa0 conjaura/data.o
+                0x08001d7c                SPI1RXComplete
+ .text.SPI1RXHalfComplete
+                0x08001e1c       0x20 conjaura/data.o
+                0x08001e1c                SPI1RXHalfComplete
  .text.SPI2TXComplete
-                0x08001e6c       0x80 conjaura/data.o
-                0x08001e6c                SPI2TXComplete
+                0x08001e3c       0x80 conjaura/data.o
+                0x08001e3c                SPI2TXComplete
  .text.InitSegmentSizes
-                0x08001eec       0x2c conjaura/data_stream.o
-                0x08001eec                InitSegmentSizes
+                0x08001ebc       0x2c conjaura/data_stream.o
+                0x08001ebc                InitSegmentSizes
  .text.SortSegmentSizes
-                0x08001f18       0x6c conjaura/data_stream.o
-                0x08001f18                SortSegmentSizes
+                0x08001ee8       0x6c conjaura/data_stream.o
+                0x08001ee8                SortSegmentSizes
  .text.HandleStreamReturn
-                0x08001f84       0x40 conjaura/data_stream.o
-                0x08001f84                HandleStreamReturn
+                0x08001f54       0x40 conjaura/data_stream.o
+                0x08001f54                HandleStreamReturn
  .text.SendPanelStream
-                0x08001fc4       0x40 conjaura/data_stream.o
-                0x08001fc4                SendPanelStream
+                0x08001f94       0x40 conjaura/data_stream.o
+                0x08001f94                SendPanelStream
  .text.NextPanelStream
-                0x08002004       0xc0 conjaura/data_stream.o
-                0x08002004                NextPanelStream
- .text.InitDMA  0x080020c4      0x12c conjaura/dma.o
-                0x080020c4                InitDMA
+                0x08001fd4       0xd0 conjaura/data_stream.o
+                0x08001fd4                NextPanelStream
+ .text.InitDMA  0x080020a4      0x164 conjaura/dma.o
+                0x080020a4                InitDMA
  .text.DMA1_1_IRQ
-                0x080021f0       0x28 conjaura/dma.o
-                0x080021f0                DMA1_1_IRQ
+                0x08002208       0x28 conjaura/dma.o
+                0x08002208                DMA1_1_IRQ
  .text.DMA1_23_IRQ
-                0x08002218       0x2c conjaura/dma.o
-                0x08002218                DMA1_23_IRQ
+                0x08002230       0x68 conjaura/dma.o
+                0x08002230                DMA1_23_IRQ
  .text.DMA1_47_IRQ
-                0x08002244       0x30 conjaura/dma.o
-                0x08002244                DMA1_47_IRQ
+                0x08002298       0x30 conjaura/dma.o
+                0x08002298                DMA1_47_IRQ
  .text.ReceiveSPI1DMA
-                0x08002274       0x14 conjaura/dma.o
-                0x08002274                ReceiveSPI1DMA
+                0x080022c8       0x14 conjaura/dma.o
+                0x080022c8                ReceiveSPI1DMA
  .text.TransmitReceiveSPI1DMA
-                0x08002288       0x30 conjaura/dma.o
-                0x08002288                TransmitReceiveSPI1DMA
+                0x080022dc       0x34 conjaura/dma.o
+                0x080022dc                TransmitReceiveSPI1DMA
  .text.TransmitSPI2DMA
-                0x080022b8       0x14 conjaura/dma.o
-                0x080022b8                TransmitSPI2DMA
+                0x08002310       0x14 conjaura/dma.o
+                0x08002310                TransmitSPI2DMA
  .text.debugPrint
-                0x080022cc        0x4 conjaura/globals.o
-                0x080022cc                debugPrint
+                0x08002324        0x4 conjaura/globals.o
+                0x08002324                debugPrint
  .text.Initialise
-                0x080022d0       0x18 conjaura/globals.o
-                0x080022d0                Initialise
+                0x08002328       0x18 conjaura/globals.o
+                0x08002328                Initialise
  .text.CollectAddresses
-                0x080022e8       0x14 conjaura/panel_config.o
-                0x080022e8                CollectAddresses
+                0x08002340       0x14 conjaura/panel_config.o
+                0x08002340                CollectAddresses
  .text.AddressMode
-                0x080022fc       0x4c conjaura/panel_config.o
-                0x080022fc                AddressMode
+                0x08002354       0x4c conjaura/panel_config.o
+                0x08002354                AddressMode
  .text.SendConfHeader
-                0x08002348       0x54 conjaura/panel_config.o
-                0x08002348                SendConfHeader
+                0x080023a0       0x54 conjaura/panel_config.o
+                0x080023a0                SendConfHeader
  .text.parseConfData
-                0x0800239c      0x154 conjaura/panel_config.o
-                0x0800239c                parseConfData
- .text.InitSPI  0x080024f0      0x13c conjaura/spi.o
-                0x080024f0                InitSPI
+                0x080023f4      0x154 conjaura/panel_config.o
+                0x080023f4                parseConfData
+ .text.InitSPI  0x08002548      0x140 conjaura/spi.o
+                0x08002548                InitSPI
  .text.Reset_Handler
-                0x0800262c       0x50 startup/startup_stm32g070xx.o
-                0x0800262c                Reset_Handler
+                0x08002688       0x50 startup/startup_stm32g070xx.o
+                0x08002688                Reset_Handler
  .text.Default_Handler
-                0x0800267c        0x2 startup/startup_stm32g070xx.o
-                0x0800267c                TIM1_CC_IRQHandler
-                0x0800267c                I2C1_IRQHandler
-                0x0800267c                RTC_TAMP_IRQHandler
-                0x0800267c                SPI1_IRQHandler
-                0x0800267c                USART3_4_IRQHandler
-                0x0800267c                EXTI2_3_IRQHandler
-                0x0800267c                ADC1_IRQHandler
-                0x0800267c                I2C2_IRQHandler
-                0x0800267c                TIM17_IRQHandler
-                0x0800267c                TIM16_IRQHandler
-                0x0800267c                TIM3_IRQHandler
-                0x0800267c                RCC_IRQHandler
-                0x0800267c                Default_Handler
-                0x0800267c                TIM14_IRQHandler
-                0x0800267c                TIM7_IRQHandler
-                0x0800267c                TIM15_IRQHandler
-                0x0800267c                EXTI0_1_IRQHandler
-                0x0800267c                SPI2_IRQHandler
-                0x0800267c                WWDG_IRQHandler
-                0x0800267c                USART2_IRQHandler
-                0x0800267c                FLASH_IRQHandler
-                0x0800267c                USART1_IRQHandler
-                0x0800267c                TIM1_BRK_UP_TRG_COM_IRQHandler
+                0x080026d8        0x2 startup/startup_stm32g070xx.o
+                0x080026d8                TIM1_CC_IRQHandler
+                0x080026d8                I2C1_IRQHandler
+                0x080026d8                RTC_TAMP_IRQHandler
+                0x080026d8                SPI1_IRQHandler
+                0x080026d8                USART3_4_IRQHandler
+                0x080026d8                EXTI2_3_IRQHandler
+                0x080026d8                ADC1_IRQHandler
+                0x080026d8                I2C2_IRQHandler
+                0x080026d8                TIM17_IRQHandler
+                0x080026d8                TIM16_IRQHandler
+                0x080026d8                TIM3_IRQHandler
+                0x080026d8                RCC_IRQHandler
+                0x080026d8                Default_Handler
+                0x080026d8                TIM14_IRQHandler
+                0x080026d8                TIM7_IRQHandler
+                0x080026d8                TIM15_IRQHandler
+                0x080026d8                EXTI0_1_IRQHandler
+                0x080026d8                SPI2_IRQHandler
+                0x080026d8                WWDG_IRQHandler
+                0x080026d8                USART2_IRQHandler
+                0x080026d8                FLASH_IRQHandler
+                0x080026d8                USART1_IRQHandler
+                0x080026d8                TIM1_BRK_UP_TRG_COM_IRQHandler
  *(.glue_7)
- .glue_7        0x0800267e        0x0 linker stubs
+ .glue_7        0x080026da        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x0800267e        0x0 linker stubs
+ .glue_7t       0x080026da        0x0 linker stubs
  *(.eh_frame)
- *fill*         0x0800267e        0x2 
- .eh_frame      0x08002680        0x0 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+ *fill*         0x080026da        0x2 
+ .eh_frame      0x080026dc        0x0 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
  *(.init)
- .init          0x08002680        0x4 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crti.o
-                0x08002680                _init
- .init          0x08002684        0x8 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtn.o
+ .init          0x080026dc        0x4 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crti.o
+                0x080026dc                _init
+ .init          0x080026e0        0x8 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtn.o
  *(.fini)
- .fini          0x0800268c        0x4 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crti.o
-                0x0800268c                _fini
- .fini          0x08002690        0x8 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtn.o
-                0x08002698                . = ALIGN (0x4)
-                0x08002698                _etext = .
+ .fini          0x080026e8        0x4 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crti.o
+                0x080026e8                _fini
+ .fini          0x080026ec        0x8 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtn.o
+                0x080026f4                . = ALIGN (0x4)
+                0x080026f4                _etext = .
 
-.vfp11_veneer   0x08002698        0x0
- .vfp11_veneer  0x08002698        0x0 linker stubs
+.vfp11_veneer   0x080026f4        0x0
+ .vfp11_veneer  0x080026f4        0x0 linker stubs
 
-.v4_bx          0x08002698        0x0
- .v4_bx         0x08002698        0x0 linker stubs
+.v4_bx          0x080026f4        0x0
+ .v4_bx         0x080026f4        0x0 linker stubs
 
-.iplt           0x08002698        0x0
- .iplt          0x08002698        0x0 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+.iplt           0x080026f4        0x0
+ .iplt          0x080026f4        0x0 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
 
-.rodata         0x08002698       0xa8
-                0x08002698                . = ALIGN (0x4)
+.rodata         0x080026f4       0xa8
+                0x080026f4                . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x08002698       0x11 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_uart.o
- *fill*         0x080026a9        0x3 
- .rodata        0x080026ac       0x60 Src/system_stm32g0xx.o
-                0x080026ac                AHBPrescTable
-                0x080026ec                APBPrescTable
+ .rodata        0x080026f4       0x11 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_uart.o
+ *fill*         0x08002705        0x3 
+ .rodata        0x08002708       0x60 Src/system_stm32g0xx.o
+                0x08002708                AHBPrescTable
+                0x08002748                APBPrescTable
  *(.rodata*)
  .rodata.str1.4
-                0x0800270c       0x1a conjaura/data.o
- *fill*         0x08002726        0x2 
+                0x08002768       0x1a conjaura/data.o
+ *fill*         0x08002782        0x2 
  .rodata.str1.4
-                0x08002728       0x18 conjaura/panel_config.o
+                0x08002784       0x18 conjaura/panel_config.o
                                  0x16 (size before relaxing)
-                0x08002740                . = ALIGN (0x4)
+                0x0800279c                . = ALIGN (0x4)
 
-.rel.dyn        0x08002740        0x0
- .rel.iplt      0x08002740        0x0 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+.rel.dyn        0x0800279c        0x0
+ .rel.iplt      0x0800279c        0x0 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x08002740        0x0
-                0x08002740                __exidx_start = .
+.ARM            0x0800279c        0x0
+                0x0800279c                __exidx_start = .
  *(.ARM.exidx*)
-                0x08002740                __exidx_end = .
+                0x0800279c                __exidx_end = .
 
-.preinit_array  0x08002740        0x0
-                0x08002740                PROVIDE (__preinit_array_start = .)
+.preinit_array  0x0800279c        0x0
+                0x0800279c                PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x08002740                PROVIDE (__preinit_array_end = .)
+                0x0800279c                PROVIDE (__preinit_array_end = .)
 
-.init_array     0x08002740        0x4
-                0x08002740                PROVIDE (__init_array_start = .)
+.init_array     0x0800279c        0x4
+                0x0800279c                PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x08002740        0x4 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
-                0x08002744                PROVIDE (__init_array_end = .)
+ .init_array    0x0800279c        0x4 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+                0x080027a0                PROVIDE (__init_array_end = .)
 
-.fini_array     0x08002744        0x4
+.fini_array     0x080027a0        0x4
                 [!provide]                PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x08002744        0x4 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+ .fini_array    0x080027a0        0x4 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
                 [!provide]                PROVIDE (__fini_array_end = .)
-                0x08002748                _sidata = LOADADDR (.data)
+                0x080027a4                _sidata = LOADADDR (.data)
 
-.data           0x20000000       0x1c load address 0x08002748
+.data           0x20000000       0x1c load address 0x080027a4
                 0x20000000                . = ALIGN (0x4)
                 0x20000000                _sdata = .
  *(.data)
@@ -4053,11 +4056,11 @@ LOAD c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17
                 0x2000001c                . = ALIGN (0x4)
                 0x2000001c                _edata = .
 
-.igot.plt       0x2000001c        0x0 load address 0x08002764
+.igot.plt       0x2000001c        0x0 load address 0x080027c0
  .igot.plt      0x2000001c        0x0 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
                 0x2000001c                . = ALIGN (0x4)
 
-.bss            0x2000001c     0x3430 load address 0x08002764
+.bss            0x2000001c     0x3430 load address 0x080027c0
                 0x2000001c                _sbss = .
                 0x2000001c                __bss_start__ = _sbss
  *(.bss)
@@ -4086,7 +4089,7 @@ LOAD c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17
                 0x2000344c                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x2000344c      0x604 load address 0x08002764
+                0x2000344c      0x604 load address 0x080027c0
                 0x20003450                . = ALIGN (0x8)
  *fill*         0x2000344c        0x4 
                 0x20003450                PROVIDE (end = .)
@@ -4163,7 +4166,7 @@ LOAD c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17
                 0x000004d3       0x1e c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtn.o
 OUTPUT(conjaura_pimcu.elf elf32-littlearm)
 
-.debug_frame    0x00000000     0x15e8
+.debug_frame    0x00000000     0x1604
  .debug_frame   0x00000000       0x2c c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-init.o)
  .debug_frame   0x0000002c       0x20 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-memset.o)
  .debug_frame   0x0000004c      0x204 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal.o
@@ -4179,16 +4182,16 @@ OUTPUT(conjaura_pimcu.elf elf32-littlearm)
  .debug_frame   0x00001050       0xc8 Src/stm32g0xx_it.o
  .debug_frame   0x00001118       0x38 Src/system_stm32g0xx.o
  .debug_frame   0x00001150       0xa8 conjaura/colour.o
- .debug_frame   0x000011f8       0xd4 conjaura/data.o
- .debug_frame   0x000012cc       0xb0 conjaura/data_stream.o
- .debug_frame   0x0000137c       0xfc conjaura/dma.o
- .debug_frame   0x00001478       0x38 conjaura/globals.o
- .debug_frame   0x000014b0       0x88 conjaura/panel_config.o
- .debug_frame   0x00001538       0x70 conjaura/spi.o
- .debug_frame   0x000015a8       0x20 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(_udivsi3.o)
- .debug_frame   0x000015c8       0x20 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(_divsi3.o)
+ .debug_frame   0x000011f8       0xec conjaura/data.o
+ .debug_frame   0x000012e4       0xb0 conjaura/data_stream.o
+ .debug_frame   0x00001394      0x100 conjaura/dma.o
+ .debug_frame   0x00001494       0x38 conjaura/globals.o
+ .debug_frame   0x000014cc       0x88 conjaura/panel_config.o
+ .debug_frame   0x00001554       0x70 conjaura/spi.o
+ .debug_frame   0x000015c4       0x20 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(_udivsi3.o)
+ .debug_frame   0x000015e4       0x20 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(_divsi3.o)
 
-.debug_info     0x00000000    0x1277a
+.debug_info     0x00000000    0x12a60
  .debug_info    0x00000000      0x99c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal.o
  .debug_info    0x0000099c      0xa47 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_cortex.o
  .debug_info    0x000013e3      0x661 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_gpio.o
@@ -4197,20 +4200,20 @@ OUTPUT(conjaura_pimcu.elf elf32-littlearm)
  .debug_info    0x00002c2d      0x896 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_rcc_ex.o
  .debug_info    0x000034c3     0x287c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_uart.o
  .debug_info    0x00005d3f      0xd40 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_uart_ex.o
- .debug_info    0x00006a7f     0x214f Src/main.o
- .debug_info    0x00008bce      0xfcc Src/stm32g0xx_hal_msp.o
- .debug_info    0x00009b9a      0x568 Src/stm32g0xx_it.o
- .debug_info    0x0000a102      0x43a Src/system_stm32g0xx.o
- .debug_info    0x0000a53c     0x1485 conjaura/colour.o
- .debug_info    0x0000b9c1     0x17da conjaura/data.o
- .debug_info    0x0000d19b     0x1017 conjaura/data_stream.o
- .debug_info    0x0000e1b2     0x1076 conjaura/dma.o
- .debug_info    0x0000f228      0xea6 conjaura/globals.o
- .debug_info    0x000100ce     0x14dc conjaura/panel_config.o
- .debug_info    0x000115aa     0x11ae conjaura/spi.o
- .debug_info    0x00012758       0x22 startup/startup_stm32g070xx.o
+ .debug_info    0x00006a7f     0x2077 Src/main.o
+ .debug_info    0x00008af6      0xfcc Src/stm32g0xx_hal_msp.o
+ .debug_info    0x00009ac2      0x568 Src/stm32g0xx_it.o
+ .debug_info    0x0000a02a      0x43a Src/system_stm32g0xx.o
+ .debug_info    0x0000a464     0x1485 conjaura/colour.o
+ .debug_info    0x0000b8e9     0x17f0 conjaura/data.o
+ .debug_info    0x0000d0d9     0x10a0 conjaura/data_stream.o
+ .debug_info    0x0000e179     0x1395 conjaura/dma.o
+ .debug_info    0x0000f50e      0xea6 conjaura/globals.o
+ .debug_info    0x000103b4     0x14dc conjaura/panel_config.o
+ .debug_info    0x00011890     0x11ae conjaura/spi.o
+ .debug_info    0x00012a3e       0x22 startup/startup_stm32g070xx.o
 
-.debug_abbrev   0x00000000     0x2f63
+.debug_abbrev   0x00000000     0x2ff2
  .debug_abbrev  0x00000000      0x2bc Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal.o
  .debug_abbrev  0x000002bc      0x28a Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_cortex.o
  .debug_abbrev  0x00000546      0x238 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_gpio.o
@@ -4224,15 +4227,15 @@ OUTPUT(conjaura_pimcu.elf elf32-littlearm)
  .debug_abbrev  0x000019ea      0x185 Src/stm32g0xx_it.o
  .debug_abbrev  0x00001b6f      0x147 Src/system_stm32g0xx.o
  .debug_abbrev  0x00001cb6      0x2c1 conjaura/colour.o
- .debug_abbrev  0x00001f77      0x310 conjaura/data.o
- .debug_abbrev  0x00002287      0x2c6 conjaura/data_stream.o
- .debug_abbrev  0x0000254d      0x2ae conjaura/dma.o
- .debug_abbrev  0x000027fb      0x256 conjaura/globals.o
- .debug_abbrev  0x00002a51      0x27c conjaura/panel_config.o
- .debug_abbrev  0x00002ccd      0x284 conjaura/spi.o
- .debug_abbrev  0x00002f51       0x12 startup/startup_stm32g070xx.o
+ .debug_abbrev  0x00001f77      0x328 conjaura/data.o
+ .debug_abbrev  0x0000229f      0x2d5 conjaura/data_stream.o
+ .debug_abbrev  0x00002574      0x316 conjaura/dma.o
+ .debug_abbrev  0x0000288a      0x256 conjaura/globals.o
+ .debug_abbrev  0x00002ae0      0x27c conjaura/panel_config.o
+ .debug_abbrev  0x00002d5c      0x284 conjaura/spi.o
+ .debug_abbrev  0x00002fe0       0x12 startup/startup_stm32g070xx.o
 
-.debug_loc      0x00000000     0x491a
+.debug_loc      0x00000000     0x48f9
  .debug_loc     0x00000000      0x195 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal.o
  .debug_loc     0x00000195      0x3aa Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_cortex.o
  .debug_loc     0x0000053f      0x456 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_gpio.o
@@ -4245,10 +4248,10 @@ OUTPUT(conjaura_pimcu.elf elf32-littlearm)
  .debug_loc     0x0000435e       0xd7 Src/system_stm32g0xx.o
  .debug_loc     0x00004435       0x37 conjaura/colour.o
  .debug_loc     0x0000446c       0x33 conjaura/data_stream.o
- .debug_loc     0x0000449f       0xb1 conjaura/dma.o
- .debug_loc     0x00004550      0x3ca conjaura/panel_config.o
+ .debug_loc     0x0000449f       0x90 conjaura/dma.o
+ .debug_loc     0x0000452f      0x3ca conjaura/panel_config.o
 
-.debug_aranges  0x00000000      0x860
+.debug_aranges  0x00000000      0x868
  .debug_aranges
                 0x00000000       0xf0 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal.o
  .debug_aranges
@@ -4276,21 +4279,21 @@ OUTPUT(conjaura_pimcu.elf elf32-littlearm)
  .debug_aranges
                 0x00000648       0x48 conjaura/colour.o
  .debug_aranges
-                0x00000690       0x68 conjaura/data.o
+                0x00000690       0x70 conjaura/data.o
  .debug_aranges
-                0x000006f8       0x48 conjaura/data_stream.o
+                0x00000700       0x48 conjaura/data_stream.o
  .debug_aranges
-                0x00000740       0x68 conjaura/dma.o
+                0x00000748       0x68 conjaura/dma.o
  .debug_aranges
-                0x000007a8       0x28 conjaura/globals.o
+                0x000007b0       0x28 conjaura/globals.o
  .debug_aranges
-                0x000007d0       0x38 conjaura/panel_config.o
+                0x000007d8       0x38 conjaura/panel_config.o
  .debug_aranges
-                0x00000808       0x30 conjaura/spi.o
+                0x00000810       0x30 conjaura/spi.o
  .debug_aranges
-                0x00000838       0x28 startup/startup_stm32g070xx.o
+                0x00000840       0x28 startup/startup_stm32g070xx.o
 
-.debug_ranges   0x00000000      0xfd8
+.debug_ranges   0x00000000      0xff8
  .debug_ranges  0x00000000       0xe0 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal.o
  .debug_ranges  0x000000e0       0xe8 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_cortex.o
  .debug_ranges  0x000001c8       0x48 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_gpio.o
@@ -4299,18 +4302,18 @@ OUTPUT(conjaura_pimcu.elf elf32-littlearm)
  .debug_ranges  0x00000398       0xb8 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_rcc_ex.o
  .debug_ranges  0x00000450      0x598 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_uart.o
  .debug_ranges  0x000009e8       0xb8 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_uart_ex.o
- .debug_ranges  0x00000aa0       0xa8 Src/main.o
- .debug_ranges  0x00000b48       0xf8 Src/stm32g0xx_hal_msp.o
- .debug_ranges  0x00000c40       0x40 Src/stm32g0xx_it.o
- .debug_ranges  0x00000c80       0x18 Src/system_stm32g0xx.o
- .debug_ranges  0x00000c98       0x68 conjaura/colour.o
- .debug_ranges  0x00000d00       0xb0 conjaura/data.o
- .debug_ranges  0x00000db0       0x68 conjaura/data_stream.o
- .debug_ranges  0x00000e18       0x78 conjaura/dma.o
- .debug_ranges  0x00000e90       0x18 conjaura/globals.o
- .debug_ranges  0x00000ea8       0x68 conjaura/panel_config.o
- .debug_ranges  0x00000f10       0xa8 conjaura/spi.o
- .debug_ranges  0x00000fb8       0x20 startup/startup_stm32g070xx.o
+ .debug_ranges  0x00000aa0       0x80 Src/main.o
+ .debug_ranges  0x00000b20       0xf8 Src/stm32g0xx_hal_msp.o
+ .debug_ranges  0x00000c18       0x40 Src/stm32g0xx_it.o
+ .debug_ranges  0x00000c58       0x18 Src/system_stm32g0xx.o
+ .debug_ranges  0x00000c70       0x68 conjaura/colour.o
+ .debug_ranges  0x00000cd8       0xb8 conjaura/data.o
+ .debug_ranges  0x00000d90       0x68 conjaura/data_stream.o
+ .debug_ranges  0x00000df8       0xb8 conjaura/dma.o
+ .debug_ranges  0x00000eb0       0x18 conjaura/globals.o
+ .debug_ranges  0x00000ec8       0x68 conjaura/panel_config.o
+ .debug_ranges  0x00000f30       0xa8 conjaura/spi.o
+ .debug_ranges  0x00000fd8       0x20 startup/startup_stm32g070xx.o
 
 .debug_macro    0x00000000    0x1651f
  .debug_macro   0x00000000      0x1e0 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal.o
@@ -4399,7 +4402,7 @@ OUTPUT(conjaura_pimcu.elf elf32-littlearm)
  .debug_macro   0x00015f90      0x2c8 conjaura/panel_config.o
  .debug_macro   0x00016258      0x2c7 conjaura/spi.o
 
-.debug_line     0x00000000     0xb0f1
+.debug_line     0x00000000     0xb11a
  .debug_line    0x00000000      0x8b2 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal.o
  .debug_line    0x000008b2      0x87e Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_cortex.o
  .debug_line    0x00001130      0x809 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_gpio.o
@@ -4408,20 +4411,20 @@ OUTPUT(conjaura_pimcu.elf elf32-littlearm)
  .debug_line    0x00002c10      0x86e Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_rcc_ex.o
  .debug_line    0x0000347e     0x1b82 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_uart.o
  .debug_line    0x00005000      0x99f Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_uart_ex.o
- .debug_line    0x0000599f      0x881 Src/main.o
- .debug_line    0x00006220      0x7b9 Src/stm32g0xx_hal_msp.o
- .debug_line    0x000069d9      0x709 Src/stm32g0xx_it.o
- .debug_line    0x000070e2      0x6ae Src/system_stm32g0xx.o
- .debug_line    0x00007790      0x80c conjaura/colour.o
- .debug_line    0x00007f9c      0x8c0 conjaura/data.o
- .debug_line    0x0000885c      0x833 conjaura/data_stream.o
- .debug_line    0x0000908f      0x898 conjaura/dma.o
- .debug_line    0x00009927      0x752 conjaura/globals.o
- .debug_line    0x0000a079      0x7ff conjaura/panel_config.o
- .debug_line    0x0000a878      0x7f7 conjaura/spi.o
- .debug_line    0x0000b06f       0x82 startup/startup_stm32g070xx.o
+ .debug_line    0x0000599f      0x872 Src/main.o
+ .debug_line    0x00006211      0x7b9 Src/stm32g0xx_hal_msp.o
+ .debug_line    0x000069ca      0x709 Src/stm32g0xx_it.o
+ .debug_line    0x000070d3      0x6ae Src/system_stm32g0xx.o
+ .debug_line    0x00007781      0x80c conjaura/colour.o
+ .debug_line    0x00007f8d      0x8d2 conjaura/data.o
+ .debug_line    0x0000885f      0x83d conjaura/data_stream.o
+ .debug_line    0x0000909c      0x8b1 conjaura/dma.o
+ .debug_line    0x0000994d      0x752 conjaura/globals.o
+ .debug_line    0x0000a09f      0x7ff conjaura/panel_config.o
+ .debug_line    0x0000a89e      0x7fa conjaura/spi.o
+ .debug_line    0x0000b098       0x82 startup/startup_stm32g070xx.o
 
-.debug_str      0x00000000    0x81409
+.debug_str      0x00000000    0x81410
  .debug_str     0x00000000    0x7a023 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal.o
                               0x7a65d (size before relaxing)
  .debug_str     0x0007a023      0x2ad Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_cortex.o
@@ -4438,29 +4441,29 @@ OUTPUT(conjaura_pimcu.elf elf32-littlearm)
                               0x7aeac (size before relaxing)
  .debug_str     0x0007bc4c      0x250 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_uart_ex.o
                               0x7a768 (size before relaxing)
- .debug_str     0x0007be9c     0x4feb Src/main.o
-                              0x7fa66 (size before relaxing)
- .debug_str     0x00080e87       0x5e Src/stm32g0xx_hal_msp.o
+ .debug_str     0x0007be9c     0x4fdf Src/main.o
+                              0x7fa5a (size before relaxing)
+ .debug_str     0x00080e7b       0x5e Src/stm32g0xx_hal_msp.o
                               0x7b1df (size before relaxing)
- .debug_str     0x00080ee5       0xee Src/stm32g0xx_it.o
+ .debug_str     0x00080ed9       0xee Src/stm32g0xx_it.o
                               0x7acff (size before relaxing)
- .debug_str     0x00080fd3       0x50 Src/system_stm32g0xx.o
+ .debug_str     0x00080fc7       0x50 Src/system_stm32g0xx.o
                               0x7a06f (size before relaxing)
- .debug_str     0x00081023       0xab conjaura/colour.o
+ .debug_str     0x00081017       0xab conjaura/colour.o
                               0x7f19d (size before relaxing)
- .debug_str     0x000810ce      0x121 conjaura/data.o
-                              0x7f334 (size before relaxing)
- .debug_str     0x000811ef       0x4e conjaura/data_stream.o
-                              0x7ed9c (size before relaxing)
- .debug_str     0x0008123d       0x7f conjaura/dma.o
-                              0x7edc6 (size before relaxing)
- .debug_str     0x000812bc       0x32 conjaura/globals.o
+ .debug_str     0x000810c2      0x134 conjaura/data.o
+                              0x7f347 (size before relaxing)
+ .debug_str     0x000811f6       0x4e conjaura/data_stream.o
+                              0x7edca (size before relaxing)
+ .debug_str     0x00081244       0x7f conjaura/dma.o
+                              0x7f06a (size before relaxing)
+ .debug_str     0x000812c3       0x32 conjaura/globals.o
                               0x7ecdd (size before relaxing)
- .debug_str     0x000812ee       0xc0 conjaura/panel_config.o
+ .debug_str     0x000812f5       0xc0 conjaura/panel_config.o
                               0x7f22e (size before relaxing)
- .debug_str     0x000813ae       0x2c conjaura/spi.o
+ .debug_str     0x000813b5       0x2c conjaura/spi.o
                               0x7ee88 (size before relaxing)
- .debug_str     0x000813da       0x2f startup/startup_stm32g070xx.o
+ .debug_str     0x000813e1       0x2f startup/startup_stm32g070xx.o
                                  0x4d (size before relaxing)
 
 .comment        0x00000000       0x7f

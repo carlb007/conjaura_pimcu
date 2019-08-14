@@ -8,6 +8,20 @@
 #include "dma.h"
 
 void InitDMA(){
+	 /* DMA controller clock enable */
+	  __HAL_RCC_DMA1_CLK_ENABLE();
+
+	  /* DMA interrupt init */
+	  /* DMA1_Channel1_IRQn interrupt configuration */
+	  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
+	  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+	  /* DMA1_Channel2_3_IRQn interrupt configuration */
+	  HAL_NVIC_SetPriority(DMA1_Channel2_3_IRQn, 1, 0);
+	  HAL_NVIC_EnableIRQ(DMA1_Channel2_3_IRQn);
+	  /* DMA1_Ch4_7_DMAMUX1_OVR_IRQn interrupt configuration */
+	  HAL_NVIC_SetPriority(DMA1_Ch4_7_DMAMUX1_OVR_IRQn, 1, 0);
+	  HAL_NVIC_EnableIRQ(DMA1_Ch4_7_DMAMUX1_OVR_IRQn);
+
 	DMA1_1_Init();
 	DMA1_23_Init();
 	DMA1_4_Init();
@@ -24,7 +38,7 @@ void DMA1_1_Init(){
 	DMA1_Channel1->CCR |= 2;			//SET BIT 2 TO 0. NO INTERUPT ON TX.
 	DMA1_Channel1->CCR |= 16;			//SET BIT 4 TO 1. DIRECTION - MEM TO PERIPH;
 	DMA1_Channel1->CCR |= 128;			//SET BIT 8 TO 1. MEM INCREMENT MODE.
-	DMA1_Channel1->CCR |= 8192;			//SET 13th > 12th BITS TO 1,0. HIGH PRIORITY MODE (LEV 3/4)
+	DMA1_Channel1->CCR |= 12288;			//SET 13th > 12th BITS TO 1,0. HIGH PRIORITY MODE (LEV 3/4)
 
 	DMAMUX1_Channel0->CCR = 17;			//SET MUX CHANNEL TO SPI1 TX.
 }
@@ -69,10 +83,23 @@ void DMA1_1_IRQ(){
 
 
 void DMA1_23_IRQ(){
-	DMA1_Channel2->CCR &= ~2;	//CLEAR TRANSFER COMPLETE FLAG
-	DMA1->IFCR |= (16|32);		//CLEAR ALL CHANNEL 2 INTERUPT
-	DMA1_Channel2->CCR &= ~1;	//DISABLE DMA
-	SPI1RXComplete();
+	if(DMA1->ISR & 32){
+		//Complete
+		DMA1_Channel2->CCR &= ~2;	//CLEAR TRANSFER COMPLETE FLAG
+		DMA1->IFCR |= (16|32);		//CLEAR ALL CHANNEL 2 INTERUPT
+		DMA1_Channel2->CCR &= ~1;	//DISABLE DMA
+		if(global.dataState != SENDING_PIXEL_DATA){
+			SPI1RXComplete();
+		}
+	}
+	if(DMA1->ISR & 64){
+		//HALF Complete
+		DMA1->IFCR |= 64;			//CLEAR ALL CHANNEL 2 INTERUPT
+		DMA1_Channel2->CCR &= ~4;	//CLEAR HALF TRANSFER COMPLETE FLAG
+		if(global.returnState == FALSE){
+			SPI1RXHalfComplete();
+		}
+	}
 }
 
 void DMA1_47_IRQ(){
@@ -101,8 +128,9 @@ void TransmitReceiveSPI1DMA(uint8_t *ptrTX, uint8_t *ptrRX, uint16_t len){
 	DMA1_Channel2->CMAR = (uint32_t)ptrRX;						//PERIPHERAL ADDRESS SOURCE (SPI DATA REGISTER) - SET ON INIT. ALWAYS BUFFER ADDR 0.
 	DMA1_Channel1->CMAR = (uint32_t)ptrTX;			//ADDRESS OF SRC DATA
 
-	DMA1_Channel2->CCR |= 3;									//SET BIT 0 TO 1 TO ENABLE THE DMA TRANSFER. SET BIT 1 TO 1 TO ENABLE TRANSFER COMPLETE INTERUPT
 	DMA1_Channel1->CCR |= 3;									//SET BIT 0 TO 1 TO ENABLE THE DMA TRANSFER. SET BIT 1 TO 1 TO ENABLE TRANSFER COMPLETE INTERUPT
+	DMA1_Channel2->CCR |= 7;									//SET BIT 0 TO 1 TO ENABLE THE DMA TRANSFER. SET BIT 1 TO 1 TO ENABLE TRANSFER COMPLETE INTERUPT. SET BIT 2 TO 1 TO ENABLE HALF TRANSFER COMPLETE INTERUPT.
+
 }
 
 

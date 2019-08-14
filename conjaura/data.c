@@ -90,37 +90,37 @@ void ParseHeader(){
 
 
 void SPI1RXComplete(){
-	while((SPI1->SR & SPI_SR_BSY));
+	while((SPI1->SR &  (SPI_SR_FRLVL | SPI_SR_FTLVL | SPI_SR_BSY)));
+	if(global.dataState == AWAITING_RETURN_DATA){
+		HandleStreamReturn();
+	}
+	else if(global.dataState == AWAITING_HEADER){
+		ParseHeader();
+	}
+	else if(global.dataState == AWAITING_CONF_DATA){
+		parseConfData();
+	}
+	else if(global.dataState == AWAITING_PALETTE_DATA){
+		SendColourData();
+	}
+	else if(global.dataState == AWAITING_GAMMA_DATA){
+		SendGammaData();
+	}
+	else if(global.dataState == AWAITING_SEGMENT_SIZES){
+		SortSegmentSizes();
+	}
+}
+
+void SPI1RXHalfComplete(){
 	if(global.txRXMode==TRUE){
 		global.txRXMode=FALSE;
 		global.dataState = SENDING_PIXEL_DATA;
 		SendPanelStream();
 	}
-	else{
-		if(global.dataState == AWAITING_RETURN_DATA){
-			HandleStreamReturn();
-		}
-		else if(global.dataState == AWAITING_HEADER){
-			ParseHeader();
-		}
-		else if(global.dataState == AWAITING_CONF_DATA){
-			parseConfData();
-		}
-		else if(global.dataState == AWAITING_PALETTE_DATA){
-			SendColourData();
-		}
-		else if(global.dataState == AWAITING_GAMMA_DATA){
-			SendGammaData();
-		}
-		else if(global.dataState == AWAITING_SEGMENT_SIZES){
-			SortSegmentSizes();
-		}
-	}
 }
 
-
 void SPI2TXComplete(){
-	while((SPI2->SR & SPI_SR_BSY));
+	while((SPI2->SR &  (SPI_SR_FTLVL | SPI_SR_BSY)));
 	if(global.dataState == SENDING_PIXEL_DATA){
 		NextPanelStream();
 	}

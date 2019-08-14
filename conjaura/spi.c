@@ -19,7 +19,7 @@ void InitSPI(){
 	GPIO_InitStruct.Pin = MOSI_IN_Pin|CLK_IN_Pin|PI_MISO_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
 	GPIO_InitStruct.Alternate = GPIO_AF0_SPI1;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
@@ -41,6 +41,7 @@ void InitSPI(){
 	SPI2Defaults();
 }
 
+//SPI1 TALKS TO PI IN RX/TX MODE AND RECEIVES FROM PANELS.
 void SPI1Defaults(){
 	SPI1->CR1 &= ~SPI_CR1_SPE;			//BIT 6 DISABLE SPI
 	SPI1->CR1 = 0;						//CLEAR ALL BITS
@@ -61,6 +62,7 @@ void SPI1Defaults(){
 	SPI1->CR1 |= SPI_CR1_SPE;			//SET 6th BIT TO 1 TO ENABLE SPI
 }
 
+//SPI2 IS MASTER AND TXS TO PANELS ONLY
 void SPI2Defaults(){
 	SPI2->CR1 &= ~SPI_CR1_SPE;			//BIT 6 DISABLE SPI
 	SPI2->CR1 = 0;						//CLEAR ALL BITS
